@@ -8,7 +8,7 @@ You can run this tool in 2 ways:
 -   [using **docker**](#docker) (check [official site](https://www.docker.com/get-docker) to get help with Docker's installation):  
     1.  `docker run -it nikgatto/travis-builds-reporter`
     2.  `npm start`
--   building from source (check [Node.js](https://nodejs.org) for instructions to install it):
+-   building from source (check [Node.js](https://nodejs.org) for instructions on how to install it):
     1.  `git clone https://github.com/niktekusho/travis-builds-reporter.git`
     2.  `cd travis-builds-reporter/`  
     3.  `npm i && npm start`
@@ -28,7 +28,9 @@ gives the following output:
 `Successful builds rate: 84.88%`
 
 # What's next?
+List of things to do:
 -   Improve script fault-tolerance (including better error-logging)
+-   Improve this document...
 -   Add some tests...
 -   Maybe give more options like:
     -   passing arguments to the scripts
