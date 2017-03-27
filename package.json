@@ -1,0 +1,29 @@
+{
+  "name": "travis-builds-reporter",
+  "version": "1.0.0",
+  "description": "A Travis CI CLI tool that returns basic builds statistics for a Travis enabled GitHub *public* repository.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "lint": "./node_modules/.bin/eslint ./index.js ./src/TravisBuildsUtils.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": {
+    "name": "Nicola Dal Maso",
+    "url": "https://github.com/niktekusho/"
+  },
+  "license": "GPL-3.0",
+  "dependencies": {
+    "axios": "^0.15.3",
+    "prompt": "^1.0.0",
+    "travis-ci": "^2.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^3.18.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-config-airbnb-base": "^11.1.2",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.3"
+  }
+}
