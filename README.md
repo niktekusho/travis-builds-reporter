@@ -1,6 +1,6 @@
 # Introduction
 
-**travis-builds-reporter** is a Travis CI CLI tool that returns basic builds statistics for a Travis enabled GitHub ***public*** repository.
+**travis-builds-reporter** is a Travis CI CLI tool that returns basic builds statistics for a Travis enabled ***public*** repository.
 
 # What do you need?
 
@@ -15,9 +15,7 @@ You can run this tool in 2 ways:
 
 # Show me some output...
 
-Using the [docker](#docker) version with the following input parameters:
--   *username*: niktekusho
--   *password*: (should I share it? Naaahhh)
+Using the [docker](#docker) version with the following input parameter:
 -   *repositoryName*: or-bit/WIP-docs
 
 gives the following output:  

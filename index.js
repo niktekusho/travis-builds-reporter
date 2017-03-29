@@ -2,21 +2,7 @@ const axios = require('axios');
 const TravisBuildsUtils = require('./src/TravisBuildsUtils');
 const prompt = require('prompt');
 
-let travisAccessToken = '';
-let githubAuthId;
-
-// setup the 2 axios instances: one for github and the other one for travis ci http interfaces
-function createGitHubHTTP(username, password) {
-  return axios.create({
-    baseURL: 'https://api.github.com',
-    auth: {
-      username,
-      password,
-    },
-    'Content-Type': 'application/json',
-  });
-}
-
+// setup Travis HTTP object
 const travisHTTP = axios.create({
   baseURL: 'https://api.travis-ci.org',
   timeout: 10000,
@@ -27,24 +13,14 @@ const travisHTTP = axios.create({
   },
 });
 
-console.log('You will be asked to provide your GitHub credentials in order to create a temporary token.');
-console.log('Those information will NOT be disclosed, stored and/or transmitted to services outside of Travis and GitHub.');
-
+// define prompt input schema
 const properties = [
-  {
-    name: 'username',
-    validator: /^[a-zA-Z\d\s-]+$/,
-    warning: 'Username can be letters, digits, spaces, or dashes',
-  },
-  {
-    name: 'password',
-    hidden: true,
-  },
   {
     name: 'repositoryName',
   },
 ];
 
+// define prompt error function
 function onErr(err) {
   console.log(err);
   return 1;
@@ -67,34 +43,17 @@ function fetchAllBuilds(fromBuildNumber, array, repositoryName) {
   });
 }
 
-const beginCommunication = function begin(username, password, repositoryName) {
-  const githubHTTP = createGitHubHTTP(username, password);
-  githubHTTP.post('/authorizations', {
-    scopes: [
-      'read:org', 'user:email', 'repo_deployment',
-      'repo:status',
-      'public_repo', 'write:repo_hook',
-    ],
-    note: 'temporary token to auth against travis',
-  }).then((response) => {
-    console.log('Temporary GitHub token created.');
-    console.log('Using the created GitHub temporary token to authenticate against Travis...');
-    githubAuthId = response.data.id;
-    return travisHTTP.post('/auth/github', {
-      github_token: response.data.token,
-    });
-  }).then((response) => {
-    console.log('Travis authentication succeded.');
-    travisAccessToken = response.data.access_token;
-    travisHTTP.defaults.headers.Authorization = `token ${travisAccessToken}`;
+const beginCommunication = function begin(repositoryName) {
+  console.log('Fetching builds...');
+  return fetchAllBuilds(null, [], repositoryName);
+};
 
-    // now we can delete the temporary github token
-    return githubHTTP.delete(`/authorizations/${githubAuthId}`);
-  }).then(() => {
-    console.log('Github temporary token successfully deleted.');
-    console.log('Fetching builds...');
-    return fetchAllBuilds(null, [], repositoryName);
-  })
+console.log('This tool returns basic builds statistics for a Travis enabled PUBLIC-ONLY repository.');
+prompt.start();
+
+prompt.get(properties, (err, result) => {
+  if (err) { return onErr(err); }
+  return beginCommunication(result.repositoryName)
   .then((builds) => {
     console.log(`Total builds count: ${TravisBuildsUtils.getBuildsCount(builds)}`);
     console.log(`Successful builds count: ${TravisBuildsUtils.getSuccessfulBuildsCount(builds)}`);
@@ -105,11 +64,4 @@ const beginCommunication = function begin(username, password, repositoryName) {
   .catch((error) => {
     console.log(error);
   });
-};
-
-prompt.start();
-
-prompt.get(properties, (err, result) => {
-  if (err) { return onErr(err); }
-  return beginCommunication(result.username, result.password, result.repositoryName);
 });
