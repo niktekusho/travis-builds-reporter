@@ -2,7 +2,12 @@ dist: trusty
 language: node_js
 node_js:
   - "7"
+before_install:
+  - pip install --user codecov
 install:
-    - npm install
+  - npm install
 script:
-    - npm run lint
+  - npm run lint
+  - npm run coverage
+after_success:
+  - codecov --file coverage/lcov.info --disable search

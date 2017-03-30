@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "lint": "./node_modules/.bin/eslint ./index.js ./src/TravisBuildsUtils.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "coverage": "./node_modules/.bin/istanbul cover ./index.js"
   },
   "author": {
     "name": "Nicola Dal Maso",
@@ -28,6 +29,7 @@
     "eslint-config-airbnb-base": "^11.1.2",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
-    "eslint-plugin-react": "^6.10.3"
+    "eslint-plugin-react": "^6.10.3",
+    "istanbul": "^0.4.5"
   }
 }
