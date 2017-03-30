@@ -7,7 +7,7 @@
     "start": "node index.js",
     "lint": "./node_modules/.bin/eslint ./index.js ./src/TravisBuildsUtils.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "coverage": "./node_modules/.bin/istanbul cover ./index.js"
+    "coverage": "./node_modules/.bin/istanbul cover ./index.js -- -r niktekusho/travis-builds-reporter"
   },
   "author": {
     "name": "Nicola Dal Maso",
@@ -20,6 +20,7 @@
   "license": "GPL-3.0",
   "dependencies": {
     "axios": "^0.15.3",
+    "commander": "^2.9.0",
     "prompt": "^1.0.0",
     "travis-ci": "^2.1.1"
   },
