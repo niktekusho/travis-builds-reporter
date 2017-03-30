@@ -1,3 +1,6 @@
+# Status
+[![Build Status](https://travis-ci.org/niktekusho/travis-builds-reporter.svg?branch=master)](https://travis-ci.org/niktekusho/travis-builds-reporter)
+
 # Introduction
 
 **travis-builds-reporter** is a Travis CI CLI tool that returns basic builds statistics for a Travis enabled ***public*** repository.
