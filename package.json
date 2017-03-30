@@ -7,7 +7,8 @@
     "start": "node index.js",
     "lint": "./node_modules/.bin/eslint ./index.js ./src/TravisBuildsUtils.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "coverage": "./node_modules/.bin/istanbul cover ./index.js -- -r niktekusho/travis-builds-reporter"
+    "coverage": "./node_modules/.bin/istanbul cover ./index.js -- -r niktekusho/travis-builds-reporter",
+    "depcheck": "./node_modules/.bin/depcheck ."
   },
   "author": {
     "name": "Nicola Dal Maso",
@@ -21,13 +22,12 @@
   "dependencies": {
     "axios": "^0.15.3",
     "commander": "^2.9.0",
-    "prompt": "^1.0.0",
-    "travis-ci": "^2.1.1"
+    "prompt": "^1.0.0"
   },
   "devDependencies": {
+    "depcheck": "^0.6.7",
     "eslint": "^3.18.0",
     "eslint-config-airbnb": "^14.1.0",
-    "eslint-config-airbnb-base": "^11.1.2",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.10.3",
