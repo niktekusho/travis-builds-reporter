@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "lint": "./node_modules/.bin/eslint ./index.js ./src/TravisBuildsUtils.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "./node_modules/.bin/eslint ./index.js ./src/TravisBuildsUtils.js ./test/test.js ./test/TravisBuildsUtilsTest.js",
+    "test": "mocha",
     "coverage": "./node_modules/.bin/istanbul cover ./index.js -- -r niktekusho/travis-builds-reporter",
     "depcheck": "./node_modules/.bin/depcheck ."
   },
@@ -31,6 +31,8 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.10.3",
-    "istanbul": "^0.4.5"
+    "istanbul": "^0.4.5",
+    "mocha": "^3.2.0",
+    "chai": "*"
   }
 }
