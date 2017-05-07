@@ -1,5 +1,5 @@
 const getBuildsCountForState = function getBuildsCountForState(builds, state) {
-  return Object.values(builds).filter((value) => {
+  return builds.filter((value) => {
     if (value.state === state) return true;
     return false;
   }).length;
