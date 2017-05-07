@@ -75,7 +75,7 @@ if (program.repoName) {
     outputBuildsReport(builds);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 } else {
   prompt.start();
@@ -86,7 +86,7 @@ if (program.repoName) {
       outputBuildsReport(builds);
     })
     .catch((error) => {
-      console.log(error);
+      console.error(error);
     });
   });
 }
