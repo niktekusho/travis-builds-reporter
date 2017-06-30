@@ -1,7 +1,9 @@
 const axios = require('axios');
-const TravisBuildsUtils = require('./src/TravisBuildsUtils');
 const prompt = require('prompt');
 const program = require('commander');
+
+const fetcher = require('./engine/fetcher');
+const TravisBuildsUtils = require('./TravisBuildsUtils');
 
 function setupCommander() {
   program
@@ -34,23 +36,6 @@ function onErr(err) {
   return 1;
 }
 
-function fetchAllBuilds(fromBuildNumber, array, repositoryName) {
-  return travisHTTP.get(`/repos/${repositoryName}/builds`, {
-    params: {
-      after_number: fromBuildNumber,
-    },
-  }).then((response) => {
-    console.log(fromBuildNumber);
-    const thisPageBuilds = response.data.builds;
-    // catch the end of requests chain: response.data is an undefined field after the last request
-    if (thisPageBuilds === null || thisPageBuilds === undefined || thisPageBuilds.length === 0) {
-      return array;
-    }
-    const lastCurrentPageBuildCount = thisPageBuilds[thisPageBuilds.length - 1].number;
-    return fetchAllBuilds(lastCurrentPageBuildCount, array.concat(thisPageBuilds), repositoryName);
-  });
-}
-
 function outputBuildsReport(builds) {
   console.log(`Total builds count: ${TravisBuildsUtils.getBuildsCount(builds)}`);
   console.log(`Successful builds count: ${TravisBuildsUtils.getSuccessfulBuildsCount(builds)}`);
@@ -61,7 +46,7 @@ function outputBuildsReport(builds) {
 
 const beginCommunication = function begin(repositoryName) {
   console.log('Fetching builds...');
-  return fetchAllBuilds(null, [], repositoryName);
+  return fetcher.fetch([], repositoryName, travisHTTP);
 };
 
 console.log('This tool returns basic builds statistics for a Travis enabled PUBLIC-ONLY repository.');
