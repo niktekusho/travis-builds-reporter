@@ -2,13 +2,13 @@
   "name": "travis-builds-reporter",
   "version": "1.0.0",
   "description": "A Travis CI CLI tool that returns basic builds statistics for a Travis enabled GitHub *public* repository.",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "start": "node index.js",
-    "lint": "./node_modules/.bin/eslint ./index.js ./src/TravisBuildsUtils.js ./test/test.js ./test/TravisBuildsUtilsTest.js",
+    "start": "node src/index.js",
+    "lint": "eslint src/**/*.js test/**/*.js",
     "test": "mocha",
-    "coverage": "./node_modules/.bin/istanbul cover ./index.js -- -r niktekusho/travis-builds-reporter",
-    "depcheck": "./node_modules/.bin/depcheck ."
+    "coverage": "istanbul cover ./index.js -- -r niktekusho/travis-builds-reporter",
+    "depcheck": "depcheck ."
   },
   "author": {
     "name": "Nicola Dal Maso",
@@ -25,6 +25,7 @@
     "prompt": "^1.0.0"
   },
   "devDependencies": {
+    "chai": "*",
     "depcheck": "^0.6.7",
     "eslint": "^3.18.0",
     "eslint-config-airbnb": "^14.1.0",
@@ -32,7 +33,6 @@
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.10.3",
     "istanbul": "^0.4.5",
-    "mocha": "^3.2.0",
-    "chai": "*"
+    "mocha": "^3.2.0"
   }
 }
