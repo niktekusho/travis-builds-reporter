@@ -1,5 +1,6 @@
 const fetcher = (function iife() {
   let travisHTTP;
+  let log;
 
   function fetchAllBuilds(fromBuildNumber, array, repositoryName) {
     return travisHTTP.get(`/repos/${repositoryName}/builds`, {
@@ -7,7 +8,9 @@ const fetcher = (function iife() {
         after_number: fromBuildNumber,
       },
     }).then((response) => {
-      console.log(fromBuildNumber);
+      if (log) {
+        log(fromBuildNumber);
+      }
       const thisPageBuilds = response.data.builds;
       // catch the end of requests chain: response.data is an undefined field after the last request
       // == null check for === null OR === undefined (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness)
@@ -22,8 +25,9 @@ const fetcher = (function iife() {
     }).catch((error) => { throw error; });
   }
 
-  function fetch(array, repositoryName, connection) {
+  function fetch(array, repositoryName, connection, logger) {
     travisHTTP = connection;
+    log = logger;
     return fetchAllBuilds(null, array, repositoryName);
   }
 
