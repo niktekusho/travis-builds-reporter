@@ -88,3 +88,4 @@ $RECYCLE.BIN/
 # Other software
 # =========================
 .idea/
+.nyc_output
