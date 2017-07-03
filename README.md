@@ -33,8 +33,8 @@ gives the following output:
 List of things to do:
 -   Improve script fault-tolerance (including better error-logging)
 -   Improve this document...
--   Add some tests...
+-   ~~Add some tests...~~ (some are actually here)
 -   Maybe give more options like:
-    -   passing arguments to the scripts
+    -   ~~passing arguments to the scripts~~ (done)
     -   possibility to save the output to a JSON file
 -   *What else?* (cit.)
