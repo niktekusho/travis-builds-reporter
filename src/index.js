@@ -1,8 +1,9 @@
 const axios = require('axios');
-const prompt = require('prompt');
 const program = require('commander');
+const prompt = require('prompt');
 
 const fetcher = require('./engine/fetcher');
+const client = require('./engine/client');
 const TravisBuildsUtils = require('./TravisBuildsUtils');
 
 function setupCommander() {
@@ -11,17 +12,6 @@ function setupCommander() {
     .option('-r, --repo-name <repositoryName>', 'Specify repository name')
     .parse(process.argv);
 }
-
-// setup Travis HTTP object
-const travisHTTP = axios.create({
-  baseURL: 'https://api.travis-ci.org',
-  timeout: 10000,
-  headers: {
-    'User-Agent': 'MyClient/1.0.0',
-    Accept: 'application/vnd.travis-ci.2+json',
-    Host: 'api.travis-ci.org',
-  },
-});
 
 // define prompt input schema
 const properties = [
@@ -46,7 +36,7 @@ function outputBuildsReport(builds) {
 
 const beginCommunication = function begin(repositoryName) {
   console.log('Fetching builds...');
-  return fetcher.fetch([], repositoryName, travisHTTP);
+  return fetcher.fetch([], repositoryName, client.create(axios));
 };
 
 console.log('This tool returns basic builds statistics for a Travis enabled PUBLIC-ONLY repository.');

@@ -15,18 +15,23 @@ describe('TravisBuildsUtils tests', () => {
   });
 
   it('Total builds count should return 10', () => {
-    assert.equal(buildsCount, utils.getBuildsCount(builds));
+    assert.equal(utils.getBuildsCount(builds), buildsCount);
   });
 
   it('Passed builds count should return 9', () => {
-    assert.equal(passedCount, utils.getSuccessfulBuildsCount(builds));
+    assert.equal(utils.getSuccessfulBuildsCount(builds), passedCount);
   });
 
   it('Canceled builds count should return 1', () => {
-    assert.equal(canceledCount, utils.getCanceledBuildsCount(builds));
+    assert.equal(utils.getCanceledBuildsCount(builds), canceledCount);
   });
 
   it('Failed builds count should return 0', () => {
-    assert.equal(failedCount, utils.getFailedBuildsCount(builds));
+    assert.equal(utils.getFailedBuildsCount(builds), failedCount);
+  });
+
+  it('Successful builds rate', () => {
+    const rate = passedCount / buildsCount;
+    assert.equal(utils.getSuccessfulBuildsRate(builds), rate);
   });
 });

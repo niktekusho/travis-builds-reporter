@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node src/index.js",
     "lint": "eslint src/**/*.js test/**/*.js",
-    "test": "mocha",
-    "coverage": "istanbul cover ./index.js -- -r niktekusho/travis-builds-reporter",
+    "test": "mocha --recursive",
+    "coverage": "nyc --reporter=html --reporter=lcov --reporter=text mocha --recursive",
     "depcheck": "depcheck ."
   },
   "author": {
@@ -25,14 +25,16 @@
     "prompt": "^1.0.0"
   },
   "devDependencies": {
+    "axios-mock-adapter": "^1.9.0",
     "chai": "*",
+    "chai-as-promised": "^7.1.0",
     "depcheck": "^0.6.7",
     "eslint": "^3.18.0",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
-    "eslint-plugin-react": "^6.10.3",
-    "istanbul": "^0.4.5",
-    "mocha": "^3.2.0"
+    "mocha": "^3.2.0",
+    "nyc": "^11.0.3",
+    "sinon": "^2.3.6"
   }
 }
