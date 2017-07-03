@@ -18,6 +18,10 @@ module.exports = {
     return getBuildsCountForState(builds, 'canceled');
   },
 
+  getErroredBuildsCount(builds) {
+    return getBuildsCountForState(builds, 'errored');
+  },
+
   getFailedBuildsCount(builds) {
     return getBuildsCountForState(builds, 'failed');
   },

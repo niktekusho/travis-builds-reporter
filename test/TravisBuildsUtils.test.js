@@ -7,6 +7,7 @@ describe('TravisBuildsUtils tests', () => {
   const passedCount = 9;
   const canceledCount = 1;
   const failedCount = 0;
+  const erroredCount = 0;
 
   let builds;
   before(() => {
@@ -28,6 +29,10 @@ describe('TravisBuildsUtils tests', () => {
 
   it('Failed builds count should return 0', () => {
     assert.equal(utils.getFailedBuildsCount(builds), failedCount);
+  });
+
+  it('Errored builds count should return 0', () => {
+    assert.equal(utils.getErroredBuildsCount(builds), erroredCount);
   });
 
   it('Successful builds rate', () => {

@@ -31,6 +31,7 @@ function outputBuildsReport(builds) {
   console.log(`Successful builds count: ${TravisBuildsUtils.getSuccessfulBuildsCount(builds)}`);
   console.log(`Canceled builds count: ${TravisBuildsUtils.getCanceledBuildsCount(builds)}`);
   console.log(`Failed builds count: ${TravisBuildsUtils.getFailedBuildsCount(builds)}`);
+  console.log(`Errored builds count: ${TravisBuildsUtils.getErroredBuildsCount(builds)}`);
   console.log(`Successful builds rate: ${(TravisBuildsUtils.getSuccessfulBuildsRate(builds) * 100).toFixed(2)}%`);
 }
 
