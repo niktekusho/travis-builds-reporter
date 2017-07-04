@@ -2,8 +2,8 @@ const axios = require('axios');
 const program = require('commander');
 const prompt = require('prompt');
 
-const fetcher = require('./engine/fetcher');
-const client = require('./engine/client');
+const fetcher = require('./core/fetcher');
+const client = require('./core/client');
 const TravisBuildsUtils = require('./TravisBuildsUtils');
 
 function setupCommander() {

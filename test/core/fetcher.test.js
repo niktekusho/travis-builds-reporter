@@ -2,7 +2,7 @@ const axios = require('axios');
 const MockAdapter = require('axios-mock-adapter');
 const chaiAsPromised = require('chai-as-promised');
 const expect = require('chai').use(chaiAsPromised).expect;
-const fetcher = require('../../src/engine/fetcher');
+const fetcher = require('../../src/core/fetcher');
 
 const connection = axios.create();
 

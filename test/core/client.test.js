@@ -1,6 +1,6 @@
 const axios = require('axios');
 const sinon = require('sinon');
-const client = require('../../src/engine/client');
+const client = require('../../src/core/client');
 
 const sandbox = sinon.sandbox.create();
 
