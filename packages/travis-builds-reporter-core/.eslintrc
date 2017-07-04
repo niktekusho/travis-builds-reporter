@@ -1,0 +1,13 @@
+{
+  "extends": "airbnb-base",
+  "env":{
+    "node": true,
+    "es6": true,
+    "mocha": true
+  },
+  "rules": {
+    "semi": 2,
+    "no-console": 0,
+    "linebreak-style": 0
+    }
+}
