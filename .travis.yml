@@ -4,13 +4,15 @@ node_js:
   - "7"
 cache:
   directories:
-    - "node_modules"
+  - "node_modules"
 before_install:
   - pip install --user codecov
 install:
   - npm install
 script:
   - npm run lint
-  - npm run coverage
+  - npm test
 after_success:
+  - npm run coverage
+  - ./scripts/merge-coverage-reports.sh
   - codecov --file coverage/lcov.info --disable search

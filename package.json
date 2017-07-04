@@ -1,14 +1,20 @@
 {
   "name": "travis-builds-reporter",
   "version": "1.0.0",
-  "description": "A Travis CI CLI tool that returns basic builds statistics for a Travis enabled GitHub *public* repository.",
+  "description": "A Travis CI set of tools that return basic builds statistics for a Travis enabled GitHub *public* repository.",
   "main": "src/index.js",
+  "private": true,
   "scripts": {
-    "start": "node src/index.js",
-    "lint": "eslint src/**/*.js test/**/*.js",
-    "test": "mocha --recursive",
-    "coverage": "nyc --reporter=html --reporter=lcov --reporter=text mocha --recursive",
-    "depcheck": "depcheck ."
+    "bootstrap": "lerna bootstrap",
+    "clean": "lerna clean --yes",
+    "coverage": "lerna run coverage",
+    "lerna": "lerna",
+    "lint": "lerna run lint",
+    "postinstall": "lerna bootstrap",
+    "publish": "lerna publish",
+    "refresh": "npm run clean && npm run bootstrap",
+    "start": "node packages/travis-builds-reporter-cli/src/index.js",
+    "test": "lerna run test"
   },
   "author": {
     "name": "Nicola Dal Maso",
@@ -19,21 +25,8 @@
     "url": "git://github.com/niktekusho/travis-builds-reporter.git"
   },
   "license": "GPL-3.0",
-  "dependencies": {
-    "axios": "^0.15.3",
-    "commander": "^2.9.0",
-    "prompt": "^1.0.0"
-  },
   "devDependencies": {
-    "axios-mock-adapter": "^1.9.0",
-    "chai": "*",
-    "chai-as-promised": "^7.1.0",
     "depcheck": "^0.6.7",
-    "eslint": "^3.18.0",
-    "eslint-config-airbnb-base": "^11.2.0",
-    "eslint-plugin-import": "^2.6.1",
-    "mocha": "^3.2.0",
-    "nyc": "^11.0.3",
-    "sinon": "^2.3.6"
+    "lerna": "^2.0.0-rc.5"
   }
 }

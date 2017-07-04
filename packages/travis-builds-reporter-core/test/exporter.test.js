@@ -1,5 +1,5 @@
 const expect = require('chai').expect;
-const exporter = require('../../src/core/exporter');
+const exporter = require('../src/exporter');
 
 describe('Exporter module Test Suite', () => {
   describe('when passing fake but right args', () => {

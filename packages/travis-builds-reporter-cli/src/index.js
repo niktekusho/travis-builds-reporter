@@ -2,9 +2,7 @@ const axios = require('axios');
 const program = require('commander');
 const prompt = require('prompt');
 
-const fetcher = require('./core/fetcher');
-const client = require('./core/client');
-const TravisBuildsUtils = require('./TravisBuildsUtils');
+const { client, fetcher, TravisBuildsUtils } = require('travis-builds-reporter-core');
 
 function setupCommander() {
   program
@@ -47,22 +45,22 @@ setupCommander();
 // TODO: refactor the following block of code to use promises or at least reduce the duplicated code
 if (program.repoName) {
   beginCommunication(program.repoName)
-  .then((builds) => {
-    outputBuildsReport(builds);
-  })
-  .catch((error) => {
-    console.error(error);
-  });
-} else {
-  prompt.start();
-  prompt.get(properties, (err, result) => {
-    if (err) { return onErr(err); }
-    return beginCommunication(result.repositoryName)
     .then((builds) => {
       outputBuildsReport(builds);
     })
     .catch((error) => {
       console.error(error);
     });
+} else {
+  prompt.start();
+  prompt.get(properties, (err, result) => {
+    if (err) { return onErr(err); }
+    return beginCommunication(result.repositoryName)
+      .then((builds) => {
+        outputBuildsReport(builds);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   });
 }
