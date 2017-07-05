@@ -2,7 +2,7 @@ const axios = require('axios');
 const program = require('commander');
 const prompt = require('prompt');
 
-const { client, fetcher, TravisBuildsUtils } = require('travis-builds-reporter-core');
+const { client, fetcher, buildsUtils } = require('travis-builds-reporter-core');
 
 function setupCommander() {
   program
@@ -25,12 +25,12 @@ function onErr(err) {
 }
 
 function outputBuildsReport(builds) {
-  console.log(`Total builds count: ${TravisBuildsUtils.getBuildsCount(builds)}`);
-  console.log(`Successful builds count: ${TravisBuildsUtils.getSuccessfulBuildsCount(builds)}`);
-  console.log(`Canceled builds count: ${TravisBuildsUtils.getCanceledBuildsCount(builds)}`);
-  console.log(`Failed builds count: ${TravisBuildsUtils.getFailedBuildsCount(builds)}`);
-  console.log(`Errored builds count: ${TravisBuildsUtils.getErroredBuildsCount(builds)}`);
-  console.log(`Successful builds rate: ${(TravisBuildsUtils.getSuccessfulBuildsRate(builds) * 100).toFixed(2)}%`);
+  console.log(`Total builds count: ${buildsUtils.getBuildsCount(builds)}`);
+  console.log(`Successful builds count: ${buildsUtils.getSuccessfulBuildsCount(builds)}`);
+  console.log(`Canceled builds count: ${buildsUtils.getCanceledBuildsCount(builds)}`);
+  console.log(`Failed builds count: ${buildsUtils.getFailedBuildsCount(builds)}`);
+  console.log(`Errored builds count: ${buildsUtils.getErroredBuildsCount(builds)}`);
+  console.log(`Successful builds rate: ${(buildsUtils.getSuccessfulBuildsRate(builds) * 100).toFixed(2)}%`);
 }
 
 const beginCommunication = function begin(repositoryName) {
