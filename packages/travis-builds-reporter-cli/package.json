@@ -6,6 +6,9 @@
   "directories": {
     "test": "test"
   },
+  "bin": {
+    "builds_reporter": "./bin/index.js"
+  },
   "scripts": {
     "start": "node src/index.js",
     "lint": "eslint src/**/*.js test/**/*.js"
