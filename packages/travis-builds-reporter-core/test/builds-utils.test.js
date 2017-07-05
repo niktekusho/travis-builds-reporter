@@ -62,6 +62,16 @@ describe('builds-utils tests', () => {
     assert.equal(utils.getAverageBuildsDuration(builds), average);
   });
 
+  it('Average builds duration rounding', () => {
+    const durations = builds.map(build => build.duration);
+    let sum = 0;
+    for (let i = 0; i < durations.length; i += 1) {
+      sum += durations[i];
+    }
+    const average = sum / durations.length;
+    assert.equal(utils.getAverageBuildsDuration(builds, 3), Math.round(average, 3));
+  });
+
   it('Average builds duration NaN (builds length = 0)', () => {
     const durations = [];
     assert.isNaN(utils.getAverageBuildsDuration(durations));
