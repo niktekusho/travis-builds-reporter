@@ -1,6 +1,7 @@
 const assert = require('chai').assert;
 const utils = require('../src/builds-utils.js');
 const readFile = require('fs').readFileSync;
+const path = require('path');
 
 describe('builds-utils tests', () => {
   const buildsCount = 10;
@@ -11,7 +12,8 @@ describe('builds-utils tests', () => {
 
   let builds;
   before(() => {
-    const buildsJSONFile = readFile('./test/builds.json', 'utf-8');
+    const filePath = path.join(__dirname, 'builds.json');
+    const buildsJSONFile = readFile(filePath, 'utf-8');
     builds = JSON.parse(buildsJSONFile);
   });
 
