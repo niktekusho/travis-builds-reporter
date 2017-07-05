@@ -17,13 +17,13 @@ module.exports = {
     return Math.max(...durations);
   },
 
-  getAverageBuildsDuration(builds, digits) {
+  getAverageBuildsDuration(builds, decimals) {
     const durations = extractDurations(builds);
     if (durations.length > 0) {
       const totalDuration = durations.reduce((sum, newDuration) => sum + newDuration);
       const average = totalDuration / durations.length;
-      if (digits && typeof digits === 'number') {
-        return Math.round(average, digits);
+      if (decimals && typeof decimals === 'number') {
+        return +average.toFixed(decimals);
       }
       return average;
     }
