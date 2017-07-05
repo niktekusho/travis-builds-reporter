@@ -17,10 +17,15 @@ module.exports = {
     return Math.max(...durations);
   },
 
-  getAverageBuildsDuration(builds) {
+  getAverageBuildsDuration(builds, decimals) {
     const durations = extractDurations(builds);
     if (durations.length > 0) {
-      return (durations.reduce((sum, newDuration) => sum + newDuration) / durations.length);
+      const totalDuration = durations.reduce((sum, newDuration) => sum + newDuration);
+      const average = totalDuration / durations.length;
+      if (decimals && typeof decimals === 'number') {
+        return Math.round(average, decimals);
+      }
+      return average;
     }
     return NaN;
   },
