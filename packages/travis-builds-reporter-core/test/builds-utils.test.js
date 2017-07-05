@@ -71,7 +71,7 @@ describe('builds-utils tests', () => {
       sum += durations[i];
     }
     const average = sum / durations.length;
-    assert.equal(utils.getAverageBuildsDuration(builds, 3), Math.round(average, 3));
+    assert.equal(utils.getAverageBuildsDuration(builds, 3), average.toFixed(3));
   });
 
   it('Average builds duration NaN (builds length = 0)', () => {
