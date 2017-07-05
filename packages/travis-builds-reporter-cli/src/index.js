@@ -38,7 +38,7 @@ function outputBuildsReport(builds) {
 
 const beginCommunication = function begin(repositoryName) {
   console.log('Fetching builds...');
-  return fetcher.fetch([], repositoryName, client.create(axios));
+  return fetcher.fetch(repositoryName, client.create(axios));
 };
 
 console.log('This tool returns basic builds statistics for a Travis enabled PUBLIC-ONLY repository.');

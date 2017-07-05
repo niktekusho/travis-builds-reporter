@@ -9,23 +9,25 @@ const connection = axios.create();
 // This sets the mock adapter on axios instance
 const mock = new MockAdapter(connection);
 
+const generateLongBuilds = () => {
+  const array = [];
+  for (let i = 30; i > 0; i -= 1) {
+    array.push({ id: 10000 + i, number: i.toString() });
+  }
+  return array;
+};
+
 describe('Fetcher Unit tests', () => {
   const fakeRepo = 'fake';
   describe('when everything is right', () => {
     before(() => {
       // Mock any GET request to /users
       // arguments for reply are (status, data, headers)
-      const firstParam = { params: { after_number: null } };
-      mock.onGet(`/repos/${fakeRepo}/builds`, firstParam).reply(200, {
+      mock.onGet(`/repos/${fakeRepo}/builds`).reply(200, {
         builds: [
           { id: 216708735, number: '1' },
           { id: 216708154, number: '0' },
         ],
-      });
-
-      const secondParam = { param: { after_number: 0 } };
-      mock.onGet(`/repos/${fakeRepo}/builds`, secondParam).reply(200, {
-        builds: [],
       });
     });
 
@@ -33,18 +35,8 @@ describe('Fetcher Unit tests', () => {
       mock.reset();
     });
 
-    it('should fetch from mocked Travis server and print', () => {
-      const array = [];
-      fetcher.fetch(array, fakeRepo, connection, console.log)
-        .then((builds) => {
-          expect(builds).to.be.an('array');
-          expect(builds.length).to.equal(2);
-        });
-    });
-
     it('should fetch from mocked Travis server', () => {
-      const array = [];
-      fetcher.fetch(array, fakeRepo, connection)
+      fetcher.fetch(fakeRepo, connection)
         .then((builds) => {
           expect(builds).to.be.an('array');
           expect(builds.length).to.equal(2);
@@ -52,18 +44,86 @@ describe('Fetcher Unit tests', () => {
     });
   });
 
-  describe('when something is not working', () => {
+  describe('when testing for paginated results', () => {
     before(() => {
-      mock.onGet(`/repos/${fakeRepo}/builds`).networkError();
+      // Mock any GET request to /users
+      // arguments for reply are (status, data, headers)
+      const longTest = { params: { after_number: null } };
+      const longBuilds = generateLongBuilds();
+      mock.onGet(`/repos/${fakeRepo}/builds`, longTest).reply(200, {
+        builds: longBuilds.slice(0, 20),
+      });
+
+      const secondPart = { param: { after_number: 10 } };
+      mock.onGet(`/repos/${fakeRepo}/builds`, secondPart).reply(200, {
+        builds: longBuilds.slice(20),
+      });
     });
 
     after(() => {
       mock.reset();
     });
 
-    it('should throw an error', () => (
-      expect(fetcher.fetch([], fakeRepo, connection)).to.eventually.be.rejected
-    ));
+    it('should fetch from mocked Travis server', () => {
+      fetcher.fetch(fakeRepo, connection)
+        .then((builds) => {
+          expect(builds).to.be.an('array');
+          expect(builds.length).to.equal(30);
+        });
+    });
+  });
+
+  describe('when something is not working', () => {
+    describe('and it is the network (first call)', () => {
+      before(() => {
+        mock.onGet(`/repos/${fakeRepo}/builds`).networkError();
+      });
+
+      after(() => {
+        mock.reset();
+      });
+
+      it('should throw an error', () => (
+        expect(fetcher.fetch(fakeRepo, connection)).to.eventually.be.rejected
+      ));
+    });
+
+    describe('and it is the network (NOT first call)', () => {
+      before(() => {
+        const longTest = { params: { after_number: null } };
+        const longBuilds = generateLongBuilds();
+        mock.onGet(`/repos/${fakeRepo}/builds`, longTest).reply(200, {
+          builds: longBuilds.slice(0, 20),
+        });
+
+        const secondPart = { param: { after_number: 10 } };
+        mock.onGet(`/repos/${fakeRepo}/builds`, secondPart).networkError();
+      });
+
+      after(() => {
+        mock.reset();
+      });
+
+      it('should throw an error', () => (
+        expect(fetcher.fetch(fakeRepo, connection)).to.eventually.be.rejected
+      ));
+    });
+
+    describe('and it is a change in Travis response', () => {
+      before(() => {
+        mock.onGet(`/repos/${fakeRepo}/builds`).reply(200, {
+          NEW_builds: generateLongBuilds(),
+        });
+      });
+
+      after(() => {
+        mock.reset();
+      });
+
+      it('should throw an error', () => (
+        expect(fetcher.fetch(fakeRepo, connection)).to.eventually.be.rejected
+      ));
+    });
   });
 
   after(() => {
