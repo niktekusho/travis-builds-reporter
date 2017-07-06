@@ -31,7 +31,7 @@ function outputBuildsReport(builds) {
   console.log(`Failed builds count: ${buildsUtils.getFailedBuildsCount(builds)}`);
   console.log(`Errored builds count: ${buildsUtils.getErroredBuildsCount(builds)}`);
   console.log(`Successful builds rate: ${(buildsUtils.getSuccessfulBuildsRate(builds) * 100).toFixed(2)}%`);
-  console.log(`Average builds duration: ${buildsUtils.getAverageBuildsDuration(builds, 4)} s`);
+  console.log(`Average builds duration: ${buildsUtils.getAverageBuildsDuration(builds, 2)} s`);
   console.log(`Minimum builds duration: ${buildsUtils.getMinimumBuildsDuration(builds)} s`);
   console.log(`Maximum builds duration: ${buildsUtils.getMaximumBuildsDuration(builds)} s`);
 }
