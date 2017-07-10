@@ -106,8 +106,8 @@
     "pull_request_number": null,
     "config": [],
     "state": "passed",
-    "started_at": "2017-03-30T10:44:08Z",
-    "finished_at": "2017-03-30T10:45:52Z",
+    "started_at": "2017-03-29T10:44:08Z",
+    "finished_at": "2017-03-29T10:45:52Z",
     "duration": 104,
     "job_ids": []
   },
@@ -122,8 +122,8 @@
     "pull_request_number": null,
     "config": [],
     "state": "canceled",
-    "started_at": "2017-03-30T09:50:51Z",
-    "finished_at": "2017-03-30T09:53:31Z",
+    "started_at": "2017-03-29T09:50:51Z",
+    "finished_at": "2017-03-29T09:53:31Z",
     "duration": 160,
     "job_ids": []
   },
@@ -138,8 +138,8 @@
     "pull_request_number": null,
     "config": [],
     "state": "passed",
-    "started_at": "2017-03-30T07:30:10Z",
-    "finished_at": "2017-03-30T07:31:01Z",
+    "started_at": "2017-03-29T07:30:10Z",
+    "finished_at": "2017-03-29T07:31:01Z",
     "duration": 51,
     "job_ids": []
   },
@@ -154,8 +154,8 @@
     "pull_request_number": null,
     "config": [],
     "state": "passed",
-    "started_at": "2017-03-30T07:23:38Z",
-    "finished_at": "2017-03-30T07:25:44Z",
+    "started_at": "2017-03-28T07:23:38Z",
+    "finished_at": "2017-03-28T07:25:44Z",
     "duration": 126,
     "job_ids": []
   }

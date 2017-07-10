@@ -22,18 +22,22 @@ describe('builds-utils tests', () => {
   });
 
   it('Passed builds count should return 9', () => {
+    assert.equal(utils.getSuccessfulBuilds(builds).length, passedCount);
     assert.equal(utils.getSuccessfulBuildsCount(builds), passedCount);
   });
 
   it('Canceled builds count should return 1', () => {
+    assert.equal(utils.getCanceledBuilds(builds).length, canceledCount);
     assert.equal(utils.getCanceledBuildsCount(builds), canceledCount);
   });
 
   it('Failed builds count should return 0', () => {
+    assert.equal(utils.getFailedBuilds(builds).length, failedCount);
     assert.equal(utils.getFailedBuildsCount(builds), failedCount);
   });
 
   it('Errored builds count should return 0', () => {
+    assert.equal(utils.getErroredBuilds(builds).length, erroredCount);
     assert.equal(utils.getErroredBuildsCount(builds), erroredCount);
   });
 
@@ -77,5 +81,11 @@ describe('builds-utils tests', () => {
   it('Average builds duration NaN (builds length = 0)', () => {
     const durations = [];
     assert.isNaN(utils.getAverageBuildsDuration(durations));
+  });
+
+  it('Slicing builds by date', () => {
+    const output = utils.sliceBuildsByDate(builds);
+    // there must be 3 arrays containing the builds ordered by date
+    assert.equal(output.length, 3);
   });
 });
