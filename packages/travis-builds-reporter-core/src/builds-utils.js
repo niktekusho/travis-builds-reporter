@@ -38,12 +38,15 @@ module.exports = {
     // key will be date only (YYYY-MM-DD), value will be array of builds with that started_at date
     const dateKeysMap = new Map();
     let build;
-    const filterFunc = entry => (
-      extractDateOnly(entry.started_at) === extractDateOnly(build.started_at)
-    );
+    const filterFunc = (entry) => {
+      // pick one that hopefully isn't null
+      const entryDate = entry.started_at || entry.finished_at;
+      const buildDate = build.started_at || build.finished_at;
+      return extractDateOnly(entryDate) === extractDateOnly(buildDate);
+    };
     for (let i = 0; i < builds.length; i += 1) {
       build = builds[i];
-      const buildDateTime = extractDateOnly(build.started_at);
+      const buildDateTime = extractDateOnly(build.started_at || build.finished_at);
       // if the key is present, its return value will be != null and we can skip insertion in map
       if (dateKeysMap.get(buildDateTime) == null) {
         dateKeysMap.set(buildDateTime, builds.filter(filterFunc));

@@ -154,7 +154,7 @@
     "pull_request_number": null,
     "config": [],
     "state": "passed",
-    "started_at": "2017-03-28T07:23:38Z",
+    "started_at": null,
     "finished_at": "2017-03-28T07:25:44Z",
     "duration": 126,
     "job_ids": []
