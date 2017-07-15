@@ -1,5 +1,5 @@
 const assert = require('chai').assert;
-const utils = require('../src/builds-utils.js');
+const utils = require('../src/index.js');
 const readFile = require('fs').readFileSync;
 const path = require('path');
 

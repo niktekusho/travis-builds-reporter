@@ -2,7 +2,8 @@ const axios = require('axios');
 const program = require('commander');
 const prompt = require('prompt');
 
-const { client, fetcher, buildsUtils } = require('travis-builds-reporter-core');
+const { client, fetcher } = require('travis-builds-reporter-core');
+const buildsUtils = require('travis-builds-reporter-utils');
 
 function setupCommander() {
   program
