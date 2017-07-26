@@ -42,5 +42,6 @@
   },
   "peerDependencies": {
     "axios": "^0.16.2"
-  }
+  },
+  "engines" : { "node" : ">=7.0.0" }
 }
