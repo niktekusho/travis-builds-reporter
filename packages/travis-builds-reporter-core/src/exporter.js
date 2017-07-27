@@ -1,3 +1,9 @@
+/**
+ * Builds exporter module.
+ * @module travis-builds-reporter-core/exporter
+ * @type[{create}]
+ */
+
 const exporter = (function iife() {
   function create(builds, repositoryName) {
     if (builds == null) {
@@ -18,6 +24,16 @@ const exporter = (function iife() {
   }
 
   return {
+    /**
+     * @function
+     * @description Creates a serializable object containing metadata (repository name, TODO)
+     * and the complete builds history.
+     * @param {array} builds         Array containing builds history
+     * @param {string} repositoryName Name of the repository from which builds were fetched
+     * @throws {Error} if <b>at least</b> one argument is undefined or 
+     * if the builds parameter is not an array.
+     * @return {TBD} Serializable object
+     */
     create,
   };
 }());
