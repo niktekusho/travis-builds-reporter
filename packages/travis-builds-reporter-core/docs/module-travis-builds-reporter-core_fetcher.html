@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: travis-builds-reporter-core/exporter</title>
+    <title>JSDoc: Module: travis-builds-reporter-core/fetcher</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Module: travis-builds-reporter-core/exporter</h1>
+    <h1 class="page-title">Module: travis-builds-reporter-core/fetcher</h1>
 
     
 
@@ -38,7 +38,7 @@
     <div class="container-overview">
     
         
-            <div class="description">Builds exporter module.</div>
+            <div class="description">Builds fetcher module.</div>
         
 
         
@@ -87,7 +87,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="exporter.js.html">exporter.js</a>, <a href="exporter.js.html#line1">line 1</a>
+        <a href="fetcher.js.html">fetcher.js</a>, <a href="fetcher.js.html#line1">line 1</a>
     </li></ul></dd>
     
 
@@ -142,7 +142,7 @@
     
 
     
-    <h4 class="name" id="~create"><span class="type-signature">(inner) </span>create<span class="signature">(builds, repositoryName)</span><span class="type-signature"> &rarr; {TBD}</span></h4>
+    <h4 class="name" id="~fetch"><span class="type-signature">(inner) </span>fetch<span class="signature">(repositoryName, connection)</span><span class="type-signature"> &rarr; {Promise.&lt;array>}</span></h4>
     
 
     
@@ -150,7 +150,7 @@
 
 
 <div class="description">
-    Creates a serializable object containing metadata (repository name, TODO)and the complete builds history.
+    Entry point of the fetcher module. This method calls internal methods that:<ol> <li> validate Travis APIs connections and responses </li> <li> initialize basic informations needed for the asynchonous fetcher function </li> <li> actually make the concurrent calls to fetch builds </li></ol>
 </div>
 
 
@@ -186,29 +186,6 @@
 
         <tr>
             
-                <td class="name"><code>builds</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">array</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Array containing builds history</td>
-        </tr>
-
-    
-
-        <tr>
-            
                 <td class="name"><code>repositoryName</code></td>
             
 
@@ -225,7 +202,30 @@
 
             
 
-            <td class="description last">Name of the repository from which builds were fetched</td>
+            <td class="description last">Name of the repository from which the module will try to fetch builds</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>connection</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Correctly configured axios instance to make HTTP calls(@see module:travis-builds-reporter-core/client)</td>
         </tr>
 
     
@@ -266,7 +266,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="exporter.js.html">exporter.js</a>, <a href="exporter.js.html#line37">line 37</a>
+        <a href="fetcher.js.html">fetcher.js</a>, <a href="fetcher.js.html#line139">line 139</a>
     </li></ul></dd>
     
 
@@ -287,42 +287,13 @@
 
 
 
-<h5>Throws:</h5>
-
-        
-
-<dl>
-    <dt>
-        <div class="param-desc">
-        if <b>at least</b> one argument is undefined or if the builds parameter is not an array.
-        </div>
-    </dt>
-    <dd></dd>
-    <dt>
-        <dl>
-            <dt>
-                Type
-            </dt>
-            <dd>
-                
-<span class="param-type">Error</span>
-
-
-            </dd>
-        </dl>
-    </dt>
-    <dd></dd>
-</dl>
-
-
-    
 
 
 <h5>Returns:</h5>
 
         
 <div class="param-desc">
-    Serializable object
+    Array of builds when promise fullfills.
 </div>
 
 
@@ -333,7 +304,7 @@
     </dt>
     <dd>
         
-<span class="param-type">TBD</span>
+<span class="param-type">Promise.&lt;array></span>
 
 
     </dd>
