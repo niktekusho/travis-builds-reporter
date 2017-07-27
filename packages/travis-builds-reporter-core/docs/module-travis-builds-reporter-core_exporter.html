@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: travis-builds-reporter-core/client</title>
+    <title>JSDoc: Module: travis-builds-reporter-core/exporter</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Module: travis-builds-reporter-core/client</h1>
+    <h1 class="page-title">Module: travis-builds-reporter-core/exporter</h1>
 
     
 
@@ -38,7 +38,7 @@
     <div class="container-overview">
     
         
-            <div class="description">Client configuring module.</div>
+            <div class="description">Builds exporter module.</div>
         
 
         
@@ -87,7 +87,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client.js.html">client.js</a>, <a href="client.js.html#line1">line 1</a>
+        <a href="exporter.js.html">exporter.js</a>, <a href="exporter.js.html#line1">line 1</a>
     </li></ul></dd>
     
 
@@ -142,7 +142,7 @@
     
 
     
-    <h4 class="name" id="~create"><span class="type-signature">(inner) </span>create<span class="signature">(axiosPackage, userAgent<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+    <h4 class="name" id="~create"><span class="type-signature">(inner) </span>create<span class="signature">(builds, repositoryName)</span><span class="type-signature"> &rarr; {TBD}</span></h4>
     
 
     
@@ -150,7 +150,7 @@
 
 
 <div class="description">
-    Creates a preconfigured axios instance that works with the public Travis APIs.
+    Creates a serializable object containing metadata (repository name, TODO)and the complete builds history.
 </div>
 
 
@@ -174,11 +174,7 @@
         <th>Type</th>
 
         
-        <th>Attributes</th>
-        
 
-        
-        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -190,42 +186,30 @@
 
         <tr>
             
-                <td class="name"><code>axiosPackage</code></td>
+                <td class="name"><code>builds</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Object</span>
+<span class="param-type">array</span>
 
 
             
             </td>
 
             
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
 
             
-                <td class="default">
-                
-                </td>
-            
 
-            <td class="description last">Object returned when requiring/importing the <b>whole</b> axios package (like in: "const axios = require('axios');")</td>
+            <td class="description last">Array containing builds history</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>userAgent</code></td>
+                <td class="name"><code>repositoryName</code></td>
             
 
             <td class="type">
@@ -238,26 +222,10 @@
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
 
             
-                <td class="default">
-                
-                    niktekusho/travis-builds-reporter-core/1.0.0
-                
-                </td>
-            
 
-            <td class="description last">Custom user agent.</td>
+            <td class="description last">Name of the repository from which builds were fetched</td>
         </tr>
 
     
@@ -298,7 +266,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client.js.html">client.js</a>, <a href="client.js.html#line34">line 34</a>
+        <a href="exporter.js.html">exporter.js</a>, <a href="exporter.js.html#line37">line 37</a>
     </li></ul></dd>
     
 
@@ -319,13 +287,42 @@
 
 
 
+<h5>Throws:</h5>
+
+        
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        if <b>at least</b> one argument is undefined or if the builds parameter is not an array.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">Error</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+
+    
 
 
 <h5>Returns:</h5>
 
         
 <div class="param-desc">
-    Configured axios instance
+    Serializable object
 </div>
 
 
@@ -336,7 +333,7 @@
     </dt>
     <dd>
         
-<span class="param-type">Object</span>
+<span class="param-type">TBD</span>
 
 
     </dd>

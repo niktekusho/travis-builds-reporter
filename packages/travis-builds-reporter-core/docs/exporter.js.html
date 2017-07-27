@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: client.js</title>
+    <title>JSDoc: Source: exporter.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: client.js</h1>
+    <h1 class="page-title">Source: exporter.js</h1>
 
     
 
@@ -27,43 +27,46 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * Client configuring module.
- * @module travis-builds-reporter-core/client
+ * Builds exporter module.
+ * @module travis-builds-reporter-core/exporter
  * @type[{create}]
  */
-const client = (function iife() {
-  function create(axiosPackage, userAgent) {
-    let ua = 'niktekusho/travis-builds-reporter-core/1.0.0';
-    if (userAgent) {
-      ua = userAgent;
+
+const exporter = (function iife() {
+  function create(builds, repositoryName) {
+    if (builds == null) {
+      throw new Error('Missing builds argument');
     }
-    return axiosPackage.create({
-      baseURL: 'https://api.travis-ci.org',
-      timeout: 10000,
-      headers: {
-        'User-Agent': ua,
-        Accept: 'application/vnd.travis-ci.2+json',
-        Host: 'api.travis-ci.org',
-      },
-    });
+
+    if (repositoryName == null) {
+      throw new Error('Missing repository name argument');
+    }
+
+    if (Array.isArray(builds)) {
+      return {
+        repository: repositoryName,
+        builds,
+      };
+    }
+    throw new Error('Builds argument is not an array');
   }
 
   return {
     /**
      * @function
-     * @description Creates a preconfigured axios instance that works with the public Travis APIs.
-     *
-     * @param {Object} axiosPackage Object returned when requiring/importing 
-     * the &lt;b>whole&lt;/b> axios package (like in: "const axios = require('axios');")  
-     * @param {string} [userAgent=niktekusho/travis-builds-reporter-core/1.0.0] Custom user agent. 
-     *
-     * @return {Object} Configured axios instance
+     * @description Creates a serializable object containing metadata (repository name, TODO)
+     * and the complete builds history.
+     * @param {array} builds         Array containing builds history
+     * @param {string} repositoryName Name of the repository from which builds were fetched
+     * @throws {Error} if &lt;b>at least&lt;/b> one argument is undefined or 
+     * if the builds parameter is not an array.
+     * @return {TBD} Serializable object
      */
     create,
   };
 }());
 
-module.exports = client;
+module.exports = exporter;
 </code></pre>
         </article>
     </section>
