@@ -2,9 +2,7 @@
  * Client configuring module.
  * @module travis-builds-reporter-core/client
  * @type[{create}]
- * @see module:travis-builds-reporter-core/client
  */
-
 const client = (function iife() {
   function create(axiosPackage, userAgent) {
     let ua = 'niktekusho/travis-builds-reporter-core/1.0.0';
