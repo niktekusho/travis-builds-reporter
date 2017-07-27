@@ -21,7 +21,7 @@ describe('Axios client Test Suite', () => {
       baseURL: 'https://api.travis-ci.org',
       timeout: 10000,
       headers: {
-        'User-Agent': 'MyClient/1.0.0',
+        'User-Agent': 'niktekusho/travis-builds-reporter-core/1.0.0',
         Accept: 'application/vnd.travis-ci.2+json',
         Host: 'api.travis-ci.org',
       },

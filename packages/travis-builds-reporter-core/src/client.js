@@ -1,7 +1,13 @@
+/**
+ * Client configuring module.
+ * @module travis-builds-reporter-core/client
+ * @type[{create}]
+ * @see module:travis-builds-reporter-core/client
+ */
+
 const client = (function iife() {
-  // setup Travis axios instance
   function create(axiosPackage, userAgent) {
-    let ua = 'MyClient/1.0.0';
+    let ua = 'niktekusho/travis-builds-reporter-core/1.0.0';
     if (userAgent) {
       ua = userAgent;
     }
@@ -17,6 +23,16 @@ const client = (function iife() {
   }
 
   return {
+    /**
+     * @function
+     * @description Creates a preconfigured axios instance that works with the public Travis APIs.
+     *
+     * @param {Object} axiosPackage Object returned when requiring/importing 
+     * the <b>whole</b> axios package (like in: "const axios = require('axios');")  
+     * @param {string} [userAgent=niktekusho/travis-builds-reporter-core/1.0.0] Custom user agent. 
+     *
+     * @return {Object} Configured axios instance
+     */
     create,
   };
 }());
