@@ -16,7 +16,7 @@ So... I imagine you have questions...
     You can find the code inside the [`packages`](packages) directory. Inside it there will be the single packages you need.
 
 -   **What's in there?**  
-    This is the list of the single modules which makes this (useful hopefully... :wink:) tool:
+    This is the list of the single packages which makes this (useful hopefully... :wink:) tool:
     -   [`travis-builds-reporter-core`](packages/travis-builds-reporter-core) is the core package of the utility: its goal is to let users configure an axios instance and use it to retrieve builds from Travis CI.
     -   [`travis-builds-reporter-utils`](packages/travis-builds-reporter-utils) is a utility package that offers basic statistics over a builds list (like # of successful builds, etc.). <br/>***Note: this package could potentially work with other providers if they provide a similar interface.***
     -   [`travis-builds-reporter-cli`](packages/travis-builds-reporter-cli) is a **C**ommand **L**ine **I**nterface that allows users to have basic stats of a public Travis CI repository.
