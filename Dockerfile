@@ -1,12 +1,12 @@
-FROM mhart/alpine-node:7
+FROM  node:alpine
 
-WORKDIR /src
+WORKDIR /app
 COPY . .
 
-RUN npm install
+RUN npm install --unsafe-perm
 
 # if args will be added in the start script
-# CMD ["npm", "start"]
+CMD ["npm", "start"]
 
-# for now run this container using interactive shell
-CMD ["sh"]
+# test this container using interactive shell
+# CMD ["sh"]
