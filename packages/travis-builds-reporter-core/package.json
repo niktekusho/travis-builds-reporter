@@ -1,6 +1,6 @@
 {
   "name": "travis-builds-reporter-core",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Core scripts of the travis-builds-reporter project",
   "main": "dist/index.js",
   "directories": {

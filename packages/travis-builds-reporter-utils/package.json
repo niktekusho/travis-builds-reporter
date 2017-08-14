@@ -1,6 +1,6 @@
 {
   "name": "travis-builds-reporter-utils",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Utilities (stats calculators basically) of the travis-builds-reporter project",
   "main": "dist/index.js",
   "directories": {
@@ -38,5 +38,7 @@
     "mocha": "^3.4.2",
     "nyc": "^11.0.3"
   },
-  "engines" : { "node" : ">=7.0.0" }
+  "engines": {
+    "node": ">=7.0.0"
+  }
 }
