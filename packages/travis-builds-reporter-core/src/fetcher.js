@@ -1,7 +1,6 @@
 /**
  * Builds fetcher module.
  * @module travis-builds-reporter-core/fetcher
- * @type[{fetch}]
  */
 const fetcher = (function iife() {
   let travisHTTP;

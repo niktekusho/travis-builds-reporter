@@ -1,7 +1,6 @@
 /**
  * Client configuring module.
  * @module travis-builds-reporter-core/client
- * @type[{create}]
  */
 const client = (function iife() {
   function create(axiosPackage, userAgent) {

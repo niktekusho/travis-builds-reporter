@@ -17,7 +17,6 @@
 ## travis-builds-reporter-core/client
 Client configuring module.
 
-**Type[{create}]**:   
 <a name="module_travis-builds-reporter-core/client..create"></a>
 
 ### travis-builds-reporter-core/client~create(axiosPackage, [userAgent]) ⇒ <code>Object</code>
@@ -36,7 +35,6 @@ Creates a preconfigured axios instance that works with the public Travis APIs.
 ## travis-builds-reporter-core/exporter
 Builds exporter module.
 
-**Type[{create}]**:   
 <a name="module_travis-builds-reporter-core/exporter..create"></a>
 
 ### travis-builds-reporter-core/exporter~create(builds, repositoryName) ⇒ <code>TBD</code>
@@ -59,7 +57,6 @@ Creates a serializable object containing metadata (repository name, TODO)and th
 ## travis-builds-reporter-core/fetcher
 Builds fetcher module.
 
-**Type[{fetch}]**:   
 <a name="module_travis-builds-reporter-core/fetcher..fetch"></a>
 
 ### travis-builds-reporter-core/fetcher~fetch(repositoryName, connection) ⇒ <code>Promise.&lt;array&gt;</code>
