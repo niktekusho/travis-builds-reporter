@@ -29,8 +29,8 @@ const exporter = (function iife() {
      * and the complete builds history.
      * @param {array} builds         Array containing builds history
      * @param {string} repositoryName Name of the repository from which builds were fetched
-     * @throws {Error} if <b>at least</b> one argument is undefined or 
-     * if the builds parameter is not an array.
+     * @throws {Error} if <b>at least</b> one argument is undefined or
+     *  if the builds parameter is not an array.
      * @return {TBD} Serializable object
      */
     create,
