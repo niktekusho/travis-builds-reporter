@@ -128,7 +128,7 @@ const fetcher = (function iife() {
      *  <li> initialize basic informations needed for the asynchonous fetcher function </li>
      *  <li> actually make the concurrent calls to fetch builds </li>
      * </ol>
-     * 
+     *
      * @param {string} repositoryName Name of the repository from which the module
      *  will try to fetch builds
      * @param {array} connection Correctly configured axios instance to make HTTP calls
