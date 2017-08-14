@@ -6,14 +6,14 @@ const fetcher = (function iife() {
   let travisHTTP;
 
   /**
-   * @function 
-   * @description Given the total builds count, this method create an array of 
-   * builds index that can be used to spawn multiple concurrent http requests.
+   * @function
+   * @description Given the total builds count, this method create an array of
+   *  builds index that can be used to spawn multiple concurrent http requests.
    *
    * @param {number} buildsCount   Total number of builds
    * @param {number} buildsPerPage Number of builds inside a Travis API response (paginated results)
    *
-   * @return {array} Array of indexes that can be used to query Travis APIs 
+   * @return {array} Array of indexes that can be used to query Travis APIs
    */
   function spliceBuilds(buildsCount, buildsPerPage) {
     const splicedBuilds = [];
@@ -27,7 +27,7 @@ const fetcher = (function iife() {
   }
 
   /**
-   * @function 
+   * @function
    * @description Method that start the HTTP calls to Travis API.
    *
    * @param {number} from Start index of the call (paginated results)
@@ -44,14 +44,14 @@ const fetcher = (function iife() {
   }
 
   /**
-   * @function 
-   * @description Validates Travis response: in the response there must be a 
-   * <b>"builds"</b> object that is of type "array". 
+   * @function
+   * @description Validates Travis response: in the response there must be a
+   * a <b>"builds"</b> object that is of type "array".
    *
-   * @param {object} response HTTP response from Travis API 
+   * @param {object} response HTTP response from Travis API
    *
-   * @return {boolean} <code>true</code> if the response contains needed builds, 
-   * <code>false</code> otherwise.
+   * @return {boolean} <code>true</code> if the response contains needed builds,
+   *  <code>false</code> otherwise.
    */
   function validateTravisResponse(response) {
     const thisPageBuilds = response.data.builds;
@@ -121,7 +121,7 @@ const fetcher = (function iife() {
   return {
     /**
      * @function
-     * @description Entry point of the fetcher module. 
+     * @description Entry point of the fetcher module.
      * This method calls internal methods that:
      * <ol>
      *  <li> validate Travis APIs connections and responses </li>
@@ -129,8 +129,8 @@ const fetcher = (function iife() {
      *  <li> actually make the concurrent calls to fetch builds </li>
      * </ol>
      * 
-     * @param {string} repositoryName Name of the repository from which the module 
-     * will try to fetch builds
+     * @param {string} repositoryName Name of the repository from which the module
+     *  will try to fetch builds
      * @param {array} connection Correctly configured axios instance to make HTTP calls
      * (@see module:travis-builds-reporter-core/client)
      * @return {Promise<array>} Array of builds when promise fullfills.
