@@ -1,7 +1,6 @@
 /**
  * Builds exporter module.
  * @module travis-builds-reporter-core/exporter
- * @type[{create}]
  */
 
 const exporter = (function iife() {
