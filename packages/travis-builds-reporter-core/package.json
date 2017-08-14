@@ -9,11 +9,15 @@
   "scripts": {
     "coverage": "nyc --reporter=html --reporter=lcov --reporter=text mocha --recursive",
     "doc": "jsdoc src -r --debug -d docs",
+    "doc2md": "jsdoc2md src/**/*.js > docs/api.md",
     "lint": "eslint src/**/*.js test/**/*.js",
     "prepublish": "babel src --out-dir dist",
     "test": "mocha --recursive"
   },
   "keywords": [
+    "ci",
+    "travis",
+    "travis-ci",
     "travis-builds-reporter"
   ],
   "repository": {
@@ -38,6 +42,7 @@
     "eslint-config-airbnb-base": "^11.2.0",
     "eslint-plugin-import": "^2.6.1",
     "jsdoc": "^3.5.3",
+    "jsdoc-to-markdown": "^3.0.0",
     "mocha": "^3.4.2",
     "nyc": "^11.0.3",
     "sinon": "^2.3.6"
