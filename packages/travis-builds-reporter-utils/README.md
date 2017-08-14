@@ -17,9 +17,11 @@ Assuming you have an already functioning node project:
      ```npm i -S travis-builds-reporter-utils```
 2.   In a *`*.js`* file in your project:
      1.   Require the module contained in this package.  
-      ```const buildsUtils = require('travis-builds-reporter-utils');```
+      ```javascript
+      const buildsUtils = require('travis-builds-reporter-utils');
+      ```
      2.   Use it with a builds array:
-     ```
+     ```javascript
      // ...
      // retrieve builds in some ways
      // for example by using travis-builds-reporter-core
