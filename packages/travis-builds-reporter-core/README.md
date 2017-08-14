@@ -17,13 +17,19 @@ Assuming you have an already functioning node project:
      ```npm i -S axios travis-builds-reporter-core```
 2.   In a *`*.js`* file in your project:
      1.   Require the modules contained in this package.  
-      ```const { client, fetcher } = require('travis-builds-reporter-core');```
+      ```javascript
+      const { client, fetcher } = require('travis-builds-reporter-core');
+      ```
      2.   Require the axios module.  
-     ```const axios = require('axios');```
-     3.   Create the pre-configured axios instance.
-     ```const travis = client.create(axios);```
-     4.   Fetch the builds from Travis using the promise returned by fetcher
+     ```javascript
+     const axios = require('axios');
      ```
+     3.   Create the pre-configured axios instance.
+     ```javascript
+     const travis = client.create(axios);
+     ```
+     4.   Fetch the builds from Travis using the promise returned by fetcher
+     ```javascript
      fetcher.fetch('some/repository', travis)
       .then((builds) => {
         // do something with the builds
@@ -35,7 +41,7 @@ Assuming you have an already functioning node project:
       });
      ```
      The final js file should be something like:
-     ```
+     ```javascript
      const { client, fetcher } = require('travis-builds-reporter-core');
      const axios = require('axios');
      const travis = client.create(axios);
