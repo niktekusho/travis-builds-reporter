@@ -24,9 +24,9 @@ const client = (function iife() {
      * @function
      * @description Creates a preconfigured axios instance that works with the public Travis APIs.
      *
-     * @param {Object} axiosPackage Object returned when requiring/importing 
-     * the <b>whole</b> axios package (like in: "const axios = require('axios');")  
-     * @param {string} [userAgent=niktekusho/travis-builds-reporter-core/1.0.0] Custom user agent. 
+     * @param {Object} axiosPackage Object returned when requiring/importing
+     *  the <b>whole</b> axios package (like in: "const axios = require('axios');")
+     * @param {string} [userAgent=niktekusho/travis-builds-reporter-core/1.0.0] Custom user agent.
      *
      * @return {Object} Configured axios instance
      */
