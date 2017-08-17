@@ -52,7 +52,6 @@ Successful builds rate: 94.39%
 Average builds duration: 79.45 s
 Minimum builds duration: 18 s
 Maximum builds duration: 197 s
-Successful builds rate: 84.88%
 ```
 
 # Related projects :link:
