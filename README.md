@@ -6,7 +6,7 @@
 
 **travis-builds-reporter** is a set of Travis CI CLI tools that makes easy to fetch basic builds statistics for a Travis enabled ***public*** repository.
 
-# What's in here?
+# What's in here? :sparkles:
 
 This is a [monorepo](https://github.com/babel/babel/blob/master/doc/design/monorepo.md) containing the single packages for the tools. To achieve this result, the project proudly uses [lerna](https://github.com/lerna/lerna).
 
@@ -21,7 +21,7 @@ So... I imagine you have questions...
     -   [`travis-builds-reporter-utils`](packages/travis-builds-reporter-utils) is a utility package that offers basic statistics over a builds list (like # of successful builds, etc.). <br/>***Note: this package could potentially work with other providers if they provide a similar interface.***
     -   [`travis-builds-reporter-cli`](packages/travis-builds-reporter-cli) is a **C**ommand **L**ine **I**nterface that allows users to have basic stats of a public Travis CI repository.
 
-# What do you need?
+# What do you need? :wrench:
 
 You can run this tool in 2 ways:
 -   [using **docker**](#docker) (check [official site](https://www.docker.com/get-docker) to get help with Docker's installation):  
@@ -33,23 +33,33 @@ You can run this tool in 2 ways:
 
 #### Node.js 7 is the default target
 
-# Show me some output...
+# Show me some output... :eyeglasses:
 
 Using the [docker](#docker) version with the following input parameter:
--   *repositoryName*: or-bit/WIP-docs
+-   *repositoryName*: niktekusho/travis-builds-reporter
 
 gives the following output:  
-`Total builds count: 549`  
-`Successful builds count: 466`  
-`Canceled builds count: 1`  
-`Failed builds count: 68`  
-`Successful builds rate: 84.88%`
+```
+This tool returns basic builds statistics for a Travis enabled PUBLIC-ONLY
+repositoryName:  niktekusho/travis-builds-reporter
+Fetching builds...
+Total builds count: 107
+Successful builds count: 101
+Canceled builds count: 1
+Failed builds count: 3
+Errored builds count: 2
+Successful builds rate: 94.39%
+Average builds duration: 79.45 s
+Minimum builds duration: 18 s
+Maximum builds duration: 197 s
+Successful builds rate: 84.88%
+```
 
-# Related projects
+# Related projects :link:
 
 Checkout [travis-builds-reporter-web](https://github.com/niktekusho/travis-builds-reporter-web) for a browser interface of this utility.
 
-# What's next?
+# What's next? :rocket:
 To do:
 -   Improve script fault-tolerance (including better error-logging)
 -   ~~Improve this document...~~  
