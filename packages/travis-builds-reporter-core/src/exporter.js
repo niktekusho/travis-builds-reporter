@@ -3,6 +3,8 @@
  * @module travis-builds-reporter-core/exporter
  */
 
+const BuildsModel = require('./model');
+
 const exporter = (function iife() {
   function create(builds, repositoryName) {
     if (builds == null) {
@@ -14,10 +16,7 @@ const exporter = (function iife() {
     }
 
     if (Array.isArray(builds)) {
-      return {
-        repository: repositoryName,
-        builds,
-      };
+      return new BuildsModel(repositoryName, builds);
     }
     throw new Error('Builds argument is not an array');
   }
@@ -25,13 +24,13 @@ const exporter = (function iife() {
   return {
     /**
      * @function
-     * @description Creates a serializable object containing metadata (repository name, TODO)
+     * @description Creates a serializable object containing repository name 
      * and the complete builds history.
      * @param {array} builds         Array containing builds history
      * @param {string} repositoryName Name of the repository from which builds were fetched
      * @throws {Error} if <b>at least</b> one argument is undefined or
      *  if the builds parameter is not an array.
-     * @return {TBD} Serializable object
+     * @return {BuildsModel} Serializable object
      */
     create,
   };

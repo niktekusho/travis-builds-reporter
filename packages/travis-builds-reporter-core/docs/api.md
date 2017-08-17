@@ -40,11 +40,11 @@ Builds exporter module.
 
 <a name="module_travis-builds-reporter-core/exporter..create"></a>
 
-### travis-builds-reporter-core/exporter~create(builds, repositoryName) ⇒ <code>TBD</code>
+### travis-builds-reporter-core/exporter~create(builds, repositoryName) ⇒ <code>BuildsModel</code>
 Creates a serializable object containing metadata (repository name, TODO)and the complete builds history.
 
 **Kind**: inner method of [<code>travis-builds-reporter-core/exporter</code>](#module_travis-builds-reporter-core/exporter)  
-**Returns**: <code>TBD</code> - Serializable object  
+**Returns**: <code>BuildsModel</code> - Serializable object  
 **Throws**:
 
 - <code>Error</code> if <b>at least</b> one argument is undefined or if the builds parameter is not an array.
