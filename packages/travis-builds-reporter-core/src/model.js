@@ -18,7 +18,7 @@ class BuildsModel {
    */
   constructor(repository, builds) {
     this.repository = repository;
-    // use set "property" (validates input) 
+    // use set "property" (validates input)
     this.Builds = builds;
   }
 
@@ -77,8 +77,8 @@ class BuildsModel {
  * @param {string} json - Builds model JSON notation
  * @return {BuildsModel} Deserialzed BuildsModel instance.
  * <strong>For now exportedOn is ignored.</strong>
- * @throws {Error} Thrown when the given JSON representation of the model is 
- * <i>"corrupt"</i>: missing the repository or builds properties.
+ * @throws {Error} Thrown when the given JSON representation of the model is
+ *  <i>"corrupt"</i>: missing the repository or builds properties.
  */
 BuildsModel.fromJSONString = (json) => {
   const { repository, builds } = JSON.parse(json);

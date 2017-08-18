@@ -24,8 +24,8 @@ const exporter = (function iife() {
   return {
     /**
      * @function
-     * @description Creates a serializable object containing repository name 
-     * and the complete builds history.
+     * @description Creates a serializable object containing repository name
+     *  and the complete builds history.
      * @param {array} builds         Array containing builds history
      * @param {string} repositoryName Name of the repository from which builds were fetched
      * @throws {Error} if <b>at least</b> one argument is undefined or
