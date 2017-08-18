@@ -49,7 +49,7 @@ describe('BuildsModel Test Suite', () => {
     });
     it('invalid object should not deserialize, but throw errors instead', () => {
       const failing1 = JSON.stringify({ a: '' });
-      // need to pass a function (and not its result) since chai wrap the function to catch errors 
+      // need to pass a function (and not its result) since chai wrap the function to catch errors
       expect(() => BuildsModel.fromJSONString(failing1)).to.throw();
       const failing2 = JSON.stringify({ repository: 'test' });
       expect(() => BuildsModel.fromJSONString(failing2)).to.throw();
