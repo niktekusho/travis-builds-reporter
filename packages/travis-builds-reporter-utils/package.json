@@ -1,6 +1,6 @@
 {
   "name": "travis-builds-reporter-utils",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Utilities (stats calculators basically) of the travis-builds-reporter project",
   "main": "dist/index.js",
   "directories": {
