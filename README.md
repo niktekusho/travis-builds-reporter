@@ -59,7 +59,7 @@ Maximum builds duration: 197 s
 Checkout [travis-builds-reporter-web](https://github.com/niktekusho/travis-builds-reporter-web) for a browser interface of this utility.
 
 
-# Honorable mentions
+# Honorable mentions :bow:
 
 Thanks to:
 -   [@tommaso1](https://github.com/tommaso1) for helping with documentations and stuff :clap: 
