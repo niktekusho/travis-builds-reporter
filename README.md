@@ -67,6 +67,8 @@ Thanks to:
 
 # What's next? :rocket:
 To do:
+-   CLI misses README
+-   CLI should be installable using ```npm i -g travis-builds-reporter-cli``` and should be available using ```travis-cli -r ... ```
 -   Improve script fault-tolerance (including better error-logging)
 -   ~~Improve this document...~~  
 ***update 26/07/2017***: I'm feeling pretty good about this now, if you think there's something missing or that can be improved, please open an [issue](https://github.com/niktekusho/travis-builds-reporter/issues/new)
