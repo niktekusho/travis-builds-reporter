@@ -25,8 +25,10 @@
     "url": "git://github.com/niktekusho/travis-builds-reporter.git"
   },
   "license": "GPL-3.0",
-  "devDependencies": {
-    "lerna": "^2.0.0"
+  "engines": {
+    "node": ">=7.0.0"
   },
-  "engines" : { "node" : ">=7.0.0" }
+  "devDependencies": {
+    "lerna": "^2.2.0"
+  }
 }

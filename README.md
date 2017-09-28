@@ -1,6 +1,7 @@
 # Status
 [![Build Status](https://travis-ci.org/niktekusho/travis-builds-reporter.svg?branch=master)](https://travis-ci.org/niktekusho/travis-builds-reporter)
 [![codecov](https://codecov.io/gh/niktekusho/travis-builds-reporter/branch/master/graph/badge.svg)](https://codecov.io/gh/niktekusho/travis-builds-reporter)
+[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 
 # Introduction
 
