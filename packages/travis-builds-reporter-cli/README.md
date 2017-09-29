@@ -15,12 +15,12 @@ Assuming you have an already functioning node installation:
     ```builds_reporter```
     
 # Sample use
-##From your favourite Terminal
+## From your favourite Terminal
 ```builds_reporter -r niktekusho/travis-builds-reporter```  
 (use another *public* repository in place of this repository 😄)
 
 
-##Output
+## Output
 ```
 Total builds count: 127
 Successful builds count: 121
