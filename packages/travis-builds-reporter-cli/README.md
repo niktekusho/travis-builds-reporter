@@ -5,13 +5,13 @@
 # What's in here?
 
 You can find the source code inside the `src` directory.  
-There are no modules in this package but only a [`start script`](./src/index.js).
+In this package you can see *only* a [`start script`](./src/index.js).
 
 # How do you use it?
 Assuming you have an already functioning node installation:
 1.   Install this package globally. Type this in your favourite terminal/prompt:  
      ```npm i -g travis-builds-reporter-cli```
-2.   When installation is finished, you can invoke the command from your terminal:  
+2.   When installation is complete, you can invoke the command from your terminal:  
     ```builds_reporter```
     
 # Sample use
@@ -39,7 +39,7 @@ Maximum builds duration: 197 s
 
 # What's next?
 To do:
--   Show meaningful errors and not the complete node stack (should be shown only with a "--debug" flag)
+-   Show meaningful errors and not the complete node stack (only with a "--debug" flag we should show it)
 -   Improve this document...
 -   *What else?* (cit.)
 
