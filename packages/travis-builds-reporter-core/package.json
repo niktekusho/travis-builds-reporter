@@ -29,7 +29,7 @@
     "name": "Nicola Dal Maso",
     "url": "https://github.com/niktekusho/"
   },
-  "license": "GPL-3.0",
+  "license": "MIT",
   "dependencies": {
     "axios": "^0.16.2"
   },

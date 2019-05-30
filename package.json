@@ -24,7 +24,7 @@
     "type": "git",
     "url": "git://github.com/niktekusho/travis-builds-reporter.git"
   },
-  "license": "GPL-3.0",
+  "license": "MIT",
   "engines": {
     "node": ">=7.0.0"
   },
