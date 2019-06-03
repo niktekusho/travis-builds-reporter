@@ -29,7 +29,12 @@
     "axios": "^0.16.2",
     "commander": "^2.11.0",
     "prompt": "^1.0.0",
-    "travis-builds-reporter-core": "file:../travis-builds-reporter-core",
-    "travis-builds-reporter-utils": "file:../travis-builds-reporter-utils"
+    "travis-builds-reporter-core": "^0.1.0",
+    "travis-builds-reporter-utils": "^0.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.1.1",
+    "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-plugin-import": "^2.6.1"
   }
 }

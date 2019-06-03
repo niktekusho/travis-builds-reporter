@@ -1,13 +1,8 @@
 {
-    "npmClient": "npm",
-    "command": {
-        "bootstrap": {
-            "npmClientArgs": ["--no-package-lock"]
-        }
-    },
-    "packages": [
-        "packages/*"
-    ],
-    "hoist": true,
-    "version": "independent"
+  "lerna": "2.0.0-rc.5",
+  "packages": [
+    "packages/*"
+  ],
+  "hoist": true,
+  "version": "independent"
 }
