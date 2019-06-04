@@ -1,6 +1,7 @@
 {
   "extends": "airbnb-base",
-  "env":{
+  "root": true,
+  "env": {
     "node": true,
     "es6": true,
     "mocha": true
@@ -8,6 +9,8 @@
   "rules": {
     "semi": 2,
     "no-console": 0,
-    "linebreak-style": 0
-    }
+    "linebreak-style": 0,
+    "import/no-extraneous-dependencies": 0,
+    "import/no-unresolved": 0
+  }
 }
