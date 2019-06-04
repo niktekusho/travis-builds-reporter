@@ -1,7 +1,6 @@
 const readFile = require('fs').readFileSync;
 const path = require('path');
 
-const {assert} = require('chai');
 const utils = require('../src');
 
 describe('builds-utils tests', () => {
@@ -11,52 +10,49 @@ describe('builds-utils tests', () => {
 	const failedCount = 0;
 	const erroredCount = 0;
 
-	let builds;
-	before(() => {
-		const filePath = path.join(__dirname, 'builds.json');
-		const buildsJSONFile = readFile(filePath, 'utf-8');
-		builds = JSON.parse(buildsJSONFile);
-	});
+	const filePath = path.join(__dirname, 'builds.json');
+	const buildsJSONFile = readFile(filePath, 'utf-8');
+	const builds = JSON.parse(buildsJSONFile);
 
 	it('Total builds count should return 10', () => {
-		assert.equal(utils.getBuildsCount(builds), buildsCount);
+		expect(utils.getBuildsCount(builds)).toEqual(buildsCount);
 	});
 
 	it('Passed builds count should return 9', () => {
-		assert.equal(utils.getSuccessfulBuilds(builds).length, passedCount);
-		assert.equal(utils.getSuccessfulBuildsCount(builds), passedCount);
+		expect(utils.getSuccessfulBuilds(builds).length).toEqual(passedCount);
+		expect(utils.getSuccessfulBuildsCount(builds)).toEqual(passedCount);
 	});
 
 	it('Canceled builds count should return 1', () => {
-		assert.equal(utils.getCanceledBuilds(builds).length, canceledCount);
-		assert.equal(utils.getCanceledBuildsCount(builds), canceledCount);
+		expect(utils.getCanceledBuilds(builds).length).toEqual(canceledCount);
+		expect(utils.getCanceledBuildsCount(builds)).toEqual(canceledCount);
 	});
 
 	it('Failed builds count should return 0', () => {
-		assert.equal(utils.getFailedBuilds(builds).length, failedCount);
-		assert.equal(utils.getFailedBuildsCount(builds), failedCount);
+		expect(utils.getFailedBuilds(builds).length).toEqual(failedCount);
+		expect(utils.getFailedBuildsCount(builds)).toEqual(failedCount);
 	});
 
 	it('Errored builds count should return 0', () => {
-		assert.equal(utils.getErroredBuilds(builds).length, erroredCount);
-		assert.equal(utils.getErroredBuildsCount(builds), erroredCount);
+		expect(utils.getErroredBuilds(builds).length).toEqual(erroredCount);
+		expect(utils.getErroredBuildsCount(builds)).toEqual(erroredCount);
 	});
 
 	it('Successful builds rate', () => {
 		const rate = passedCount / buildsCount;
-		assert.equal(utils.getSuccessfulBuildsRate(builds), rate);
+		expect(utils.getSuccessfulBuildsRate(builds)).toEqual(rate);
 	});
 
 	it('Minimum builds duration', () => {
 		const durations = builds.map(build => build.duration);
 		const min = Math.min(...durations);
-		assert.equal(utils.getMinimumBuildsDuration(builds), min);
+		expect(utils.getMinimumBuildsDuration(builds)).toEqual(min);
 	});
 
 	it('Maximum builds duration', () => {
 		const durations = builds.map(build => build.duration);
 		const max = Math.max(...durations);
-		assert.equal(utils.getMaximumBuildsDuration(builds), max);
+		expect(utils.getMaximumBuildsDuration(builds)).toEqual(max);
 	});
 
 	it('Average builds duration', () => {
@@ -67,7 +63,7 @@ describe('builds-utils tests', () => {
 		}
 
 		const average = sum / durations.length;
-		assert.equal(utils.getAverageBuildsDuration(builds), average);
+		expect(utils.getAverageBuildsDuration(builds)).toBeCloseTo(average);
 	});
 
 	it('Average builds duration rounding', () => {
@@ -78,17 +74,17 @@ describe('builds-utils tests', () => {
 		}
 
 		const average = sum / durations.length;
-		assert.equal(utils.getAverageBuildsDuration(builds, 3), average.toFixed(3));
+		expect(utils.getAverageBuildsDuration(builds, 3)).toEqual(Number(average.toFixed(3)));
 	});
 
 	it('Average builds duration NaN (builds length = 0)', () => {
 		const durations = [];
-		assert.isNaN(utils.getAverageBuildsDuration(durations));
+		expect(utils.getAverageBuildsDuration(durations)).toEqual(NaN);
 	});
 
 	it('Slicing builds by date', () => {
 		const output = utils.sliceBuildsByDate(builds);
 		// There must be 3 arrays containing the builds ordered by date
-		assert.equal(output.length, 3);
+		expect(output.length).toEqual(3);
 	});
 });

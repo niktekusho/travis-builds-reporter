@@ -1,7 +1,5 @@
 const axios = require('axios');
 const MockAdapter = require('axios-mock-adapter');
-const chaiAsPromised = require('chai-as-promised');
-const {expect} = require('chai').use(chaiAsPromised);
 const fetcher = require('../src/fetcher');
 
 const connection = axios.create();
@@ -21,7 +19,7 @@ const generateLongBuilds = () => {
 describe('Fetcher Unit tests', () => {
 	const fakeRepo = 'fake';
 	describe('when everything is right', () => {
-		before(() => {
+		beforeEach(() => {
 			// Mock any GET request to /users
 			// arguments for reply are (status, data, headers)
 			mock.onGet(`/repos/${fakeRepo}/builds`).reply(200, {
@@ -32,19 +30,19 @@ describe('Fetcher Unit tests', () => {
 			});
 		});
 
-		after(() => {
+		afterEach(() => {
 			mock.reset();
 		});
 
 		it('should fetch from mocked Travis server', async () => {
 			const builds = await fetcher.fetch(fakeRepo, connection);
-			expect(builds).to.be.an('array');
-			expect(builds.length).to.equal(2);
+			expect(builds).toBeInstanceOf(Array);
+			expect(builds).toHaveLength(2);
 		});
 	});
 
 	describe('when testing for paginated results', () => {
-		before(() => {
+		beforeEach(() => {
 			// Mock any GET request to /users
 			// arguments for reply are (status, data, headers)
 			const longTest = {params: {after_number: null}}; // eslint-disable-line camelcase
@@ -59,34 +57,34 @@ describe('Fetcher Unit tests', () => {
 			});
 		});
 
-		after(() => {
+		afterEach(() => {
 			mock.reset();
 		});
 
 		it('should fetch from mocked Travis server', async () => {
 			const builds = await fetcher.fetch(fakeRepo, connection);
-			expect(builds).to.be.an('array');
-			expect(builds.length).to.equal(30);
+			expect(builds).toBeInstanceOf(Array);
+			expect(builds).toHaveLength(30);
 		});
 	});
 
 	describe('when something is not working', () => {
 		describe('and it is the network (first call)', () => {
-			before(() => {
+			beforeEach(() => {
 				mock.onGet(`/repos/${fakeRepo}/builds`).networkError();
 			});
 
-			after(() => {
+			afterEach(() => {
 				mock.reset();
 			});
 
 			it('should throw an error', () => (
-				expect(fetcher.fetch(fakeRepo, connection)).to.eventually.be.rejected
+				expect(fetcher.fetch(fakeRepo, connection)).rejects.toThrow()
 			));
 		});
 
 		describe('and it is the network (NOT first call)', () => {
-			before(() => {
+			beforeEach(() => {
 				const longTest = {params: {after_number: null}}; // eslint-disable-line camelcase
 				const longBuilds = generateLongBuilds();
 				mock.onGet(`/repos/${fakeRepo}/builds`, longTest).reply(200, {
@@ -97,33 +95,33 @@ describe('Fetcher Unit tests', () => {
 				mock.onGet(`/repos/${fakeRepo}/builds`, secondPart).networkError();
 			});
 
-			after(() => {
+			afterEach(() => {
 				mock.reset();
 			});
 
 			it('should throw an error', () => (
-				expect(fetcher.fetch(fakeRepo, connection)).to.eventually.be.rejected
+				expect(fetcher.fetch(fakeRepo, connection)).rejects.toThrow()
 			));
 		});
 
 		describe('and it is a change in Travis response', () => {
-			before(() => {
+			beforeEach(() => {
 				mock.onGet(`/repos/${fakeRepo}/builds`).reply(200, {
 					newBuilds: generateLongBuilds()
 				});
 			});
 
-			after(() => {
+			afterEach(() => {
 				mock.reset();
 			});
 
 			it('should throw an error', () => (
-				expect(fetcher.fetch(fakeRepo, connection)).to.eventually.be.rejected
+				expect(fetcher.fetch(fakeRepo, connection)).rejects.toThrow()
 			));
 		});
 	});
 
-	after(() => {
+	afterAll(() => {
 		mock.restore();
 	});
 });
