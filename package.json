@@ -26,15 +26,12 @@
         "node": ">=8"
     },
     "devDependencies": {
+        "@types/jest": "^24.0.13",
         "axios-mock-adapter": "^1.9.0",
-        "chai": "^4.0.2",
-        "chai-as-promised": "^7.1.0",
+        "jest": "^24.8.0",
         "jsdoc": "^3.5.3",
         "jsdoc-to-markdown": "^5.0.0",
         "lerna": "^3.14.1",
-        "mocha": "^3.4.2",
-        "nyc": "^11.0.3",
-        "sinon": "^2.3.6",
         "xo": "^0.24.0"
     },
     "dependencies": {
@@ -49,17 +46,14 @@
         "rules": {
             "import/no-unresolved": "off"
         },
-        "overrides": [
-            {
-                "files": "**/test/*.js",
-                "envs": [
-                    "mocha"
-                ],
-                "rules": {
-                    "import/no-unresolved": "off",
-                    "import/no-extraneous-dependencies": "off"
-                }
+        "overrides": [{
+            "files": "**/test/*.js",
+            "envs": [
+                "jest"
+            ],
+            "rules": {
+                "import/no-extraneous-dependencies": "off"
             }
-        ]
+        }]
     }
 }

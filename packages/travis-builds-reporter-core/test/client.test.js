@@ -1,23 +1,13 @@
 const axios = require('axios');
-const sinon = require('sinon');
 const client = require('../src/client');
 
-const sandbox = sinon.sandbox.create();
+jest.mock('axios');
 
 describe('Axios client Test Suite', () => {
-	let axiosStub;
-
-	before(() => {
-		axiosStub = sandbox.stub(axios, 'create');
-	});
-
-	after(() => {
-		axiosStub.restore();
-	});
-
 	it('should call axios.create with the default params', () => {
 		client.create(axios);
-		sinon.assert.calledWith(axiosStub, {
+
+		expect(axios.create).toBeCalledWith({
 			baseURL: 'https://api.travis-ci.org',
 			timeout: 10000,
 			headers: {
@@ -30,7 +20,8 @@ describe('Axios client Test Suite', () => {
 
 	it('should call axios.create with the right params', () => {
 		client.create(axios, 'test');
-		sinon.assert.calledWith(axiosStub, {
+
+		expect(axios.create).toBeCalledWith({
 			baseURL: 'https://api.travis-ci.org',
 			timeout: 10000,
 			headers: {

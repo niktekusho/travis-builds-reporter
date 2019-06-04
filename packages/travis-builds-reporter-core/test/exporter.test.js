@@ -1,4 +1,3 @@
-const {expect} = require('chai');
 const exporter = require('../src/exporter');
 
 /* eslint-disable camelcase */
@@ -40,28 +39,30 @@ describe('Exporter module Test Suite', () => {
 			}];
 			const repoName = 'test';
 			const expectedObj = {
-				repository: repoName,
-				builds
+				builds,
+				exportedOn: expect.any(Date),
+				repository: repoName
 			};
-			expect(exporter.create(builds, repoName)).to.deep.equal(expectedObj);
+			const result = exporter.create(builds, repoName).toJSON();
+			expect(result).toMatchObject(expectedObj);
 		});
 	});
 	describe('when testing for type checking', () => {
 		describe('when builds is undefined or null', () => {
 			it('should throw an Error', () => {
-				expect(() => exporter.create(undefined)).to.throw('Missing builds argument');
-				expect(() => exporter.create(null)).to.throw('Missing builds argument');
+				expect(() => exporter.create(undefined)).toThrow('Missing builds argument');
+				expect(() => exporter.create(null)).toThrow('Missing builds argument');
 			});
 		});
 		describe('when repository name is undefined or null', () => {
 			it('should throw an Error', () => {
-				expect(() => exporter.create([], undefined)).to.throw('Missing repository name argument');
-				expect(() => exporter.create([], null)).to.throw('Missing repository name argument');
+				expect(() => exporter.create([], undefined)).toThrow('Missing repository name argument');
+				expect(() => exporter.create([], null)).toThrow('Missing repository name argument');
 			});
 		});
 		describe('when builds is defined but not an array', () => {
 			it('should throw an Error', () => {
-				expect(() => exporter.create({}, 'test')).to.throw('Builds argument is not an array');
+				expect(() => exporter.create({}, 'test')).toThrow('Builds argument is not an array');
 			});
 		});
 	});
