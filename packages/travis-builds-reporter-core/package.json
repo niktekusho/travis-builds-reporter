@@ -1,38 +1,39 @@
 {
-  "name": "travis-builds-reporter-core",
-  "version": "0.1.0",
-  "description": "Core scripts of the travis-builds-reporter project",
-  "main": "dist/index.js",
-  "directories": {
-    "test": "test"
-  },
-  "scripts": {
-    "alldocs": "npm run doc && npm run doc2md",
-    "coverage": "nyc --reporter=html --reporter=lcov --reporter=text mocha --recursive",
-    "doc": "jsdoc src -r --debug -d docs",
-    "doc2md": "jsdoc2md src/**/*.js > docs/api.md",
-    "lint": "eslint src/**/*.js test/**/*.js",
-    "test": "mocha --recursive"
-  },
-  "keywords": [
-    "ci",
-    "travis",
-    "travis-ci",
-    "travis-builds-reporter"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/niktekusho/travis-builds-reporter.git"
-  },
-  "author": {
-    "name": "Nicola Dal Maso",
-    "url": "https://github.com/niktekusho/"
-  },
-  "license": "MIT",
-  "dependencies": {
-    "axios": "^0.16.2"
-  },
-  "engines": {
-    "node": ">=8"
-  }
+    "name": "travis-builds-reporter-core",
+    "version": "0.1.0",
+    "description": "Core scripts of the travis-builds-reporter project",
+    "main": "dist/index.js",
+    "directories": {
+        "test": "test"
+    },
+    "scripts": {
+        "alldocs": "npm run doc && npm run doc2md",
+        "coverage": "nyc --reporter=html --reporter=lcov --reporter=text mocha --recursive",
+        "doc": "jsdoc src -r --debug -d docs",
+        "doc2md": "jsdoc2md src/**/*.js > docs/api.md",
+        "lint": "xo",
+        "test": "mocha --recursive"
+    },
+    "keywords": [
+        "ci",
+        "travis",
+        "travis-ci",
+        "travis-builds-reporter"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/niktekusho/travis-builds-reporter.git"
+    },
+    "author": {
+        "name": "Nicola Dal Maso",
+        "url": "https://github.com/niktekusho/"
+    },
+    "license": "MIT",
+    "dependencies": {
+        "axios": "^0.18.1"
+    },
+    "engines": {
+        "node": ">=8"
+    },
+    "xo": false
 }
