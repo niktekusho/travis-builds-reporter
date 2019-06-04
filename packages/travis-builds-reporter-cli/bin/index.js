@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 
-require('../src/index');
+require('../src'); // eslint-disable-line import/no-unassigned-import

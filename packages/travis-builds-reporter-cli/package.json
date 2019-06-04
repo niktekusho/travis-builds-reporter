@@ -1,35 +1,36 @@
 {
-  "name": "travis-builds-reporter-cli",
-  "version": "0.1.0",
-  "description": "CLI client of the travis-builds-reporter project",
-  "main": "src/index.js",
-  "directories": {
-    "test": "test"
-  },
-  "bin": {
-    "builds_reporter": "./bin/index.js"
-  },
-  "scripts": {
-    "start": "node src/index.js",
-    "lint": "eslint src/**/*.js test/**/*.js"
-  },
-  "keywords": [
-    "travis-builds-reporter"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/niktekusho/travis-builds-reporter.git"
-  },
-  "author": {
-    "name": "Nicola Dal Maso",
-    "url": "https://github.com/niktekusho/"
-  },
-  "license": "MIT",
-  "dependencies": {
-    "axios": "^0.16.2",
-    "commander": "^2.11.0",
-    "prompt": "^1.0.0",
-    "travis-builds-reporter-core": "file:../travis-builds-reporter-core",
-    "travis-builds-reporter-utils": "file:../travis-builds-reporter-utils"
-  }
+    "name": "travis-builds-reporter-cli",
+    "version": "0.1.0",
+    "description": "CLI client of the travis-builds-reporter project",
+    "main": "src/index.js",
+    "directories": {
+        "test": "test"
+    },
+    "bin": {
+        "builds_reporter": "./bin/index.js"
+    },
+    "scripts": {
+        "start": "node src/index.js",
+        "lint": "xo"
+    },
+    "keywords": [
+        "travis-builds-reporter"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/niktekusho/travis-builds-reporter.git"
+    },
+    "author": {
+        "name": "Nicola Dal Maso",
+        "url": "https://github.com/niktekusho/"
+    },
+    "license": "MIT",
+    "dependencies": {
+        "axios": "^0.18.1",
+        "commander": "^2.11.0",
+        "prompt": "^1.0.0",
+        "travis-builds-reporter-core": "file:../travis-builds-reporter-core",
+        "travis-builds-reporter-utils": "file:../travis-builds-reporter-utils"
+    },
+    "xo": false
 }

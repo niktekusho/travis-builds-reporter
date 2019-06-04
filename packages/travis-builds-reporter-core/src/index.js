@@ -4,8 +4,8 @@ const fetcher = require('./fetcher');
 const BuildsModel = require('./model');
 
 module.exports = {
-  BuildsModel,
-  client,
-  exporter,
-  fetcher,
+	BuildsModel,
+	client,
+	exporter,
+	fetcher
 };
