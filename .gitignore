@@ -93,3 +93,5 @@ $RECYCLE.BIN/
 # =========================
 .idea/
 .nyc_output
+# VS Code files
+.vscode
