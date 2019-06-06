@@ -6,6 +6,8 @@
     "scripts": {
         "clean": "lerna clean --yes",
         "coverage": "lerna run coverage",
+        "doc": "lerna run doc",
+        "doc-md": "lerna run doc2md",
         "lerna": "lerna",
         "lint": "lerna run lint",
         "package": "lerna exec -- npm pack",
