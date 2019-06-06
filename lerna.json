@@ -1,8 +1,7 @@
 {
-  "lerna": "2.0.0-rc.5",
-  "packages": [
-    "packages/*"
-  ],
-  "hoist": true,
-  "version": "independent"
+    "packages": [
+        "packages/*"
+    ],
+    "hoist": true,
+    "version": "independent"
 }

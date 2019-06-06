@@ -59,5 +59,8 @@ typings/
 # dotenv environment variables file
 .env
 
-src/
+# Don't publish test files
 test/
+
+# Don't publish docs
+docs/

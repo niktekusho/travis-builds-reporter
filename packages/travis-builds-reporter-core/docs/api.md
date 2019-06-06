@@ -41,7 +41,7 @@ Builds exporter module.
 <a name="module_travis-builds-reporter-core/exporter..create"></a>
 
 ### travis-builds-reporter-core/exporter~create(builds, repositoryName) ⇒ <code>BuildsModel</code>
-Creates a serializable object containing metadata (repository name, TODO)and the complete builds history.
+Creates a serializable object containing repository name and the complete builds history.
 
 **Kind**: inner method of [<code>travis-builds-reporter-core/exporter</code>](#module_travis-builds-reporter-core/exporter)  
 **Returns**: <code>BuildsModel</code> - Serializable object  
@@ -172,7 +172,7 @@ Deserialization method.
 **Returns**: <code>BuildsModel</code> - Deserialzed BuildsModel instance.<strong>For now exportedOn is ignored.</strong>  
 **Throws**:
 
-- <code>Error</code> Thrown when the given JSON representation of the model is <i>"corrupt"</i>: missing the repository or builds properties.
+- <code>Error</code> Thrown when the given JSON representation of the model is <i>"corrupt"</i>: missing the repository or builds properties.
 
 
 | Param | Type | Description |

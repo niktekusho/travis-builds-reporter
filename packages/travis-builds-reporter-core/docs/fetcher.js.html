@@ -30,142 +30,134 @@
  * Builds fetcher module.
  * @module travis-builds-reporter-core/fetcher
  */
-const fetcher = (function iife() {
-  let travisHTTP;
+const fetcher = (function () {
+	let travisHTTP;
 
-  /**
-   * @function
-   * @description Given the total builds count, this method create an array of
-   *  builds index that can be used to spawn multiple concurrent http requests.
-   *
-   * @param {number} buildsCount   Total number of builds
-   * @param {number} buildsPerPage Number of builds inside a Travis API response (paginated results)
-   *
-   * @return {array} Array of indexes that can be used to query Travis APIs
-   */
-  function spliceBuilds(buildsCount, buildsPerPage) {
-    const splicedBuilds = [];
-    // start from the latest build
-    let currentBuildsIndex = buildsCount;
-    while (currentBuildsIndex > buildsPerPage) {
-      currentBuildsIndex -= buildsPerPage;
-      splicedBuilds.push(currentBuildsIndex);
-    }
-    return splicedBuilds;
-  }
+	/**
+	 * @function
+	 * @description Given the total builds count, this method create an array of
+	 *  builds index that can be used to spawn multiple concurrent http requests.
+	 *
+	 * @param {number} buildsCount   Total number of builds
+	 * @param {number} buildsPerPage Number of builds inside a Travis API response (paginated results)
+	 *
+	 * @return {array} Array of indexes that can be used to query Travis APIs
+	 */
+	function spliceBuilds(buildsCount, buildsPerPage) {
+		const splicedBuilds = [];
+		// Start from the latest build
+		let currentBuildsIndex = buildsCount;
+		while (currentBuildsIndex > buildsPerPage) {
+			currentBuildsIndex -= buildsPerPage;
+			splicedBuilds.push(currentBuildsIndex);
+		}
 
-  /**
-   * @function
-   * @description Method that start the HTTP calls to Travis API.
-   *
-   * @param {number} from Start index of the call (paginated results)
-   * @param {string} repositoryName Name of the repository
-   *
-   * @return {Promise&lt;array>} Array of builds from the "from" index when promise fullfills
-   */
-  function fetchBuildsFrom(from, repositoryName) {
-    return travisHTTP.get(`/repos/${repositoryName}/builds`, {
-      params: {
-        after_number: from,
-      },
-    });
-  }
+		return splicedBuilds;
+	}
 
-  /**
-   * @function
-   * @description Validates Travis response: in the response there must be a
-   * a &lt;b>"builds"&lt;/b> object that is of type "array".
-   *
-   * @param {object} response HTTP response from Travis API
-   *
-   * @return {boolean} &lt;code>true&lt;/code> if the response contains needed builds,
-   *  &lt;code>false&lt;/code> otherwise.
-   */
-  function validateTravisResponse(response) {
-    const thisPageBuilds = response.data.builds;
-    return thisPageBuilds != null &amp;&amp; thisPageBuilds.length > 0;
-  }
+	/**
+	 * @function
+	 * @description Method that start the HTTP calls to Travis API.
+	 *
+	 * @param {number} from Start index of the call (paginated results)
+	 * @param {string} repositoryName Name of the repository
+	 *
+	 * @return {Promise&lt;array>} Array of builds from the "from" index when promise fullfills
+	 */
+	function fetchBuildsFrom(from, repositoryName) {
+		return travisHTTP.get(`/repos/${repositoryName}/builds`, {
+			params: {
+				after_number: from // eslint-disable-line camelcase
+			}
+		});
+	}
 
-  /*
-   * first call to Travis APIs in order to:
-   * 1) retrieve first builds (up to 25 as of 27/07/2017) and store them for later use
-   * 2) initialize array that manages concurrent HTTP calls
-   */
-  function initializeBuildsInfo(repositoryName) {
-    return new Promise((resolve, reject) => {
-      fetchBuildsFrom(null, repositoryName).then((response) => {
-        if (validateTravisResponse(response)) {
-          const thisPageBuilds = response.data.builds;
-          const buildsCount = parseInt(thisPageBuilds[0].number, 10);
-          const buildsPerPage = thisPageBuilds.length;
-          const builds = [];
-          builds.push(...thisPageBuilds);
-          const info = {
-            buildsCount,
-            buildsPerPage,
-            builds,
-          };
-          return resolve(info);
-        }
-        return reject(new Error('Invalid response'));
-      }).catch(error => reject(error));
-    });
-  }
+	/**
+	 * @function
+	 * @description Validates Travis response: in the response there must be a
+	 * a &lt;b>"builds"&lt;/b> object that is of type "array".
+	 *
+	 * @param {object} response HTTP response from Travis API
+	 *
+	 * @return {boolean} &lt;code>true&lt;/code> if the response contains needed builds,
+	 *  &lt;code>false&lt;/code> otherwise.
+	 */
+	function validateTravisResponse(response) {
+		const thisPageBuilds = response.data.builds;
+		return thisPageBuilds &amp;&amp; thisPageBuilds.length > 0;
+	}
 
-  function fetchAllBuilds(repositoryName) {
-    return new Promise((resolve, reject) => {
-      initializeBuildsInfo(repositoryName).then((info) => {
-        const { builds, buildsCount, buildsPerPage } = info;
-        const splicedBuilds = spliceBuilds(buildsCount, buildsPerPage);
+	/*
+	 * First call to Travis APIs in order to:
+	 * 1) retrieve first builds (up to 25 as of 27/07/2017) and store them for later use
+	 * 2) initialize array that manages concurrent HTTP calls
+	 */
+	async function initializeBuildsInfo(repositoryName) {
+		const response = await fetchBuildsFrom(null, repositoryName);
+		if (validateTravisResponse(response)) {
+			const thisPageBuilds = response.data.builds;
+			const buildsCount = parseInt(thisPageBuilds[0].number, 10);
+			const buildsPerPage = thisPageBuilds.length;
+			const builds = [];
+			builds.push(...thisPageBuilds);
+			const info = {
+				buildsCount,
+				buildsPerPage,
+				builds
+			};
+			return info;
+		}
 
-        const promise = from => (
-          /*
-           validation here is not performed:
-           if Travis changed API in some ways, we would have caught that error
-           in the initializeBuildsInfo (use the same fetchBuildsFrom function)
-           */
-          fetchBuildsFrom(from, repositoryName)
-            .then(response => response.data.builds)
-            .catch(error => reject(error))
-        );
+		throw new Error('Invalid response');
+	}
 
-        const promises = splicedBuilds.map(fromBuild => promise(fromBuild));
-        Promise.all(promises)
-          .then((result) => {
-            result.forEach(partialBuilds => builds.push(...partialBuilds));
-            builds.sort((a, b) => parseInt(a.number, 10) - parseInt(b.number, 10));
-            return resolve(builds);
-          })
-          .catch(error => reject(error));
-      }).catch(error => reject(error));
-    });
-  }
+	async function fetchAllBuilds(repositoryName) {
+		const info = await initializeBuildsInfo(repositoryName);
+		const {builds, buildsCount, buildsPerPage} = info;
+		const splicedBuilds = spliceBuilds(buildsCount, buildsPerPage);
 
-  function fetch(repositoryName, connection) {
-    travisHTTP = connection;
-    return fetchAllBuilds(repositoryName);
-  }
+		const promise = async from => {
+			/*
+			 Validation here is not performed:
+			 if Travis changed API in some ways, we would have caught that error
+			 in the initializeBuildsInfo (use the same fetchBuildsFrom function)
+			 */
+			const response = await fetchBuildsFrom(from, repositoryName);
+			return response.data.builds;
+		};
 
-  return {
-    /**
-     * @function
-     * @description Entry point of the fetcher module.
-     * This method calls internal methods that:
-     * &lt;ol>
-     *  &lt;li> validate Travis APIs connections and responses &lt;/li>
-     *  &lt;li> initialize basic informations needed for the asynchonous fetcher function &lt;/li>
-     *  &lt;li> actually make the concurrent calls to fetch builds &lt;/li>
-     * &lt;/ol>
-     *
-     * @param {string} repositoryName Name of the repository from which the module
-     *  will try to fetch builds
-     * @param {array} connection Correctly configured axios instance to make HTTP calls
-     * (@see module:travis-builds-reporter-core/client)
-     * @return {Promise&lt;array>} Array of builds when promise fullfills.
-     */
-    fetch,
-  };
-}());
+		const promises = splicedBuilds.map(fromBuild => promise(fromBuild));
+		const result = await Promise.all(promises);
+		result.forEach(partialBuilds => builds.push(...partialBuilds));
+		builds.sort((a, b) => parseInt(a.number, 10) - parseInt(b.number, 10));
+		return builds;
+	}
+
+	function fetch(repositoryName, connection) {
+		travisHTTP = connection;
+		return fetchAllBuilds(repositoryName);
+	}
+
+	return {
+		/**
+		 * @function
+		 * @description Entry point of the fetcher module.
+		 * This method calls internal methods that:
+		 * &lt;ol>
+		 *  &lt;li> validate Travis APIs connections and responses &lt;/li>
+		 *  &lt;li> initialize basic informations needed for the asynchonous fetcher function &lt;/li>
+		 *  &lt;li> actually make the concurrent calls to fetch builds &lt;/li>
+		 * &lt;/ol>
+		 *
+		 * @param {string} repositoryName Name of the repository from which the module
+		 *  will try to fetch builds
+		 * @param {array} connection Correctly configured axios instance to make HTTP calls
+		 * (@see module:travis-builds-reporter-core/client)
+		 * @return {Promise&lt;array>} Array of builds when promise fullfills.
+		 */
+		fetch
+	};
+})();
 
 module.exports = fetcher;
 </code></pre>
@@ -184,7 +176,7 @@ module.exports = fetcher;
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.4</a> on Thu Aug 17 2017 17:59:16 GMT+0200 (ora legale Europa occidentale)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.2</a> on Thu Jun 06 2019 12:16:51 GMT+0200 (ora legale Europa occidentale)
 </footer>
 
 <script> prettyPrint(); </script>
