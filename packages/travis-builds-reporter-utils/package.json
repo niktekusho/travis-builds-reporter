@@ -3,6 +3,7 @@
     "version": "0.1.0",
     "description": "Utilities (stats calculators basically) of the travis-builds-reporter project",
     "main": "src/index.js",
+    "types": "src/index.d.ts",
     "directories": {
         "test": "test"
     },
@@ -12,7 +13,7 @@
         "doc": "jsdoc src -r --debug -d docs",
         "doc2md": "jsdoc2md src/**/*.js > docs/api.md",
         "lint": "xo",
-        "test": "xo && jest"
+        "test": "xo && jest && tsd"
     },
     "keywords": [
         "travis-builds-reporter"
@@ -29,5 +30,8 @@
     "engines": {
         "node": ">=8"
     },
-    "xo": false
+    "xo": false,
+    "tsd": {
+        "directory": "test"
+    }
 }

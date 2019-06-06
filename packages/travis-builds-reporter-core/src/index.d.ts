@@ -1,6 +1,6 @@
-// // Type definitions for travis-builds-reporter 1.0.0
-// // Project: travis-builds-reporter
-// // Definitions by: niktekusho <https://github.com/niktekusho>
+// Type definitions for travis-builds-reporter-core 1.0.0
+// Project: travis-builds-reporter-core
+// Definitions by: niktekusho <https://github.com/niktekusho>
 
 export import client = require("./client");
 export import exporter = require("./exporter");
