@@ -1,6 +1,6 @@
 const axios = require('axios');
 const MockAdapter = require('axios-mock-adapter');
-const fetcher = require('../src/fetcher');
+const {fetch} = require('../src');
 
 const connection = axios.create();
 
@@ -35,9 +35,8 @@ describe('Fetcher Unit tests', () => {
 		});
 
 		it('should fetch from mocked Travis server', async () => {
-			const builds = await fetcher.fetch(fakeRepo, connection);
-			expect(builds).toBeInstanceOf(Array);
-			expect(builds).toHaveLength(2);
+			const model = await fetch(connection, fakeRepo);
+			expect(model.builds).toHaveLength(2);
 		});
 	});
 
@@ -62,9 +61,8 @@ describe('Fetcher Unit tests', () => {
 		});
 
 		it('should fetch from mocked Travis server', async () => {
-			const builds = await fetcher.fetch(fakeRepo, connection);
-			expect(builds).toBeInstanceOf(Array);
-			expect(builds).toHaveLength(30);
+			const model = await fetch(connection, fakeRepo);
+			expect(model.builds).toHaveLength(30);
 		});
 	});
 
@@ -79,7 +77,7 @@ describe('Fetcher Unit tests', () => {
 			});
 
 			it('should throw an error', () => (
-				expect(fetcher.fetch(fakeRepo, connection)).rejects.toThrow()
+				expect(fetch(connection, fakeRepo)).rejects.toThrow()
 			));
 		});
 
@@ -100,7 +98,7 @@ describe('Fetcher Unit tests', () => {
 			});
 
 			it('should throw an error', () => (
-				expect(fetcher.fetch(fakeRepo, connection)).rejects.toThrow()
+				expect(fetch(connection, fakeRepo)).rejects.toThrow()
 			));
 		});
 
@@ -116,7 +114,7 @@ describe('Fetcher Unit tests', () => {
 			});
 
 			it('should throw an error', () => (
-				expect(fetcher.fetch(fakeRepo, connection)).rejects.toThrow()
+				expect(fetch(connection, fakeRepo)).rejects.toThrow()
 			));
 		});
 	});

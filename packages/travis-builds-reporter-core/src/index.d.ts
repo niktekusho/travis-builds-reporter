@@ -3,7 +3,6 @@
 // Definitions by: niktekusho <https://github.com/niktekusho>
 
 import {AxiosInstance, AxiosRequestConfig} from 'axios';
-import fetcher = require("./fetcher");
 
 declare namespace TravisBuildsReporterCore {
 	export interface ClientOptions  {
@@ -66,6 +65,19 @@ declare namespace TravisBuildsReporterCore {
 	 * @returns {AxiosInstance} Configured axios instance
 	 */
 	export function createClient(options?: TravisBuildsReporterCore.ClientOptions): AxiosInstance
+
+	/**
+	* This function does the following:
+	*
+	* - validates Travis APIs connections and responses
+	* - initializes basic informations needed for the asynchonous fetcher function
+	* - actually makes the concurrent calls to fetch builds
+	*
+	* @param client Correctly configured axios instance to make HTTP calls (createClient function provides one)
+	* @param repository Name of the repository from which the module will try to fetch builds
+	* @returns {Promise<BuildsModel>}
+	*/
+	export function fetch(client: AxiosInstance, repository: string): Promise<BuildsModel>
 }
 
 export = TravisBuildsReporterCore;
