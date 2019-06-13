@@ -3,32 +3,61 @@
 // Definitions by: niktekusho <https://github.com/niktekusho>
 
 import {AxiosInstance, AxiosRequestConfig} from 'axios';
-import exporter = require("./exporter");
 import fetcher = require("./fetcher");
-import BuildsModel = require("./model");
 
 declare namespace TravisBuildsReporterCore {
 	export interface ClientOptions  {
 		/**
-		 * Custom user agent. Default is 'niktekusho/travis-builds-reporter-core/1.0.0'
+		 * Custom user agent.
+		 *
+		 * @default 'niktekusho/travis-builds-reporter-core/1.0.0'
 		 */
-		userAgent?: string;
+		readonly userAgent?: string;
 		/**
-		 * Requests timeout. Default is 10000 ms.
+		 * Requests timeout.
+		 *
+		 * @default 10000
 		 */
-		timeout?: number;
+		readonly timeout?: number;
 		/**
-		 * Base url to fetch builds from. Default is 'https://api.travis-ci.org' (Open Source Travis APIs).
+		 * Base url to fetch builds from.
+		 *
+		 * @default 'https://api.travis-ci.org' (Open Source Travis APIs).
 		 */
-		baseURL?: string;
+		readonly baseURL?: string;
 		/**
-		 * Host to fetch builds from. Default is 'api.travis-ci.org' (Open Source Travis APIs).
+		 * Host to fetch builds from.
+		 *
+		 * @default 'api.travis-ci.org' (Open Source Travis APIs).
 		 */
-		host?: string;
+		readonly host?: string;
 	}
-}
 
-declare const TravisBuildsReporterCore: {
+	export class BuildsModel {
+		constructor(repository: string, builds: any[], exportedOn?: Date);
+
+		/**
+		 * Repository from which the library retrieved the builds
+		 */
+		repository: string;
+		/**
+		 * Array of all builds
+		 */
+		builds: any[];
+		/**
+		 * Date in which the builds are retrieved
+		 */
+		exportedOn?: Date;
+
+		/**
+		 * Deserialization method with additional validation.
+		 *
+		 * Checks that repository and builds are defined in the parsed object.
+		 *
+		 */
+		static fromJSONString: (json: string) => BuildsModel
+	}
+
 	/**
 	 * Creates a preconfigured axios instance that works with the public Travis APIs.
 	 *
@@ -36,10 +65,7 @@ declare const TravisBuildsReporterCore: {
 	 *
 	 * @returns {AxiosInstance} Configured axios instance
 	 */
-	createClient: (options?: TravisBuildsReporterCore.ClientOptions) => AxiosInstance,
-	exporter,
-	fetcher,
-	BuildsModel
+	export function createClient(options?: TravisBuildsReporterCore.ClientOptions): AxiosInstance
 }
 
 export = TravisBuildsReporterCore;

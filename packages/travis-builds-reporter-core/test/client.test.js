@@ -36,4 +36,9 @@ describe('Axios client Test Suite', () => {
 			}
 		});
 	});
+
+	it('should validate its input arguments', () => {
+		expect(() => createClient({userAgent: ' '})).toThrowError('Travis APIs require a not empty User Agent');
+		expect(() => createClient({userAgent: 5})).toThrowError('User Agent must be a string, but I got number');
+	});
 });
