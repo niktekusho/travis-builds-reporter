@@ -16,6 +16,7 @@
         "test": "xo && jest && tsd"
     },
     "keywords": [
+        "builds",
         "ci",
         "travis",
         "travis-ci",
@@ -39,5 +40,8 @@
     "xo": false,
     "tsd": {
         "directory": "test"
+    },
+    "jest": {
+        "testEnvironment": "node"
     }
 }

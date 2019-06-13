@@ -1,11 +1,11 @@
 const axios = require('axios');
-const client = require('../src/client');
+const {createClient} = require('../src');
 
 jest.mock('axios');
 
 describe('Axios client Test Suite', () => {
 	it('should call axios.create with the default params', () => {
-		client.create(axios);
+		createClient();
 
 		expect(axios.create).toBeCalledWith({
 			baseURL: 'https://api.travis-ci.org',
@@ -19,15 +19,20 @@ describe('Axios client Test Suite', () => {
 	});
 
 	it('should call axios.create with the right params', () => {
-		client.create(axios, 'test');
+		createClient({
+			baseURL: 'foo',
+			host: 'bar',
+			userAgent: 'baz',
+			timeout: 123
+		});
 
 		expect(axios.create).toBeCalledWith({
-			baseURL: 'https://api.travis-ci.org',
-			timeout: 10000,
+			baseURL: 'foo',
+			timeout: 123,
 			headers: {
-				'User-Agent': 'test',
+				'User-Agent': 'baz',
 				Accept: 'application/vnd.travis-ci.2+json',
-				Host: 'api.travis-ci.org'
+				Host: 'bar'
 			}
 		});
 	});
