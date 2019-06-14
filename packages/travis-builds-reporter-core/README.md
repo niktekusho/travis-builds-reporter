@@ -12,7 +12,7 @@ You can find an example [here](./example/example.js).
 
 Assuming you have an already functioning node project:
 
-1.   Install this package alongside axios in your project as a dependency. Type this in your favourite terminal/prompt):  
+1.   Install this package alongside axios in your project as a dependency. Type this in your favourite terminal/prompt:  
      ```npm i -S travis-builds-reporter-core```
 2.   In a *`*.js`* file in your project:
      1.   Require the modules contained in this package.  
