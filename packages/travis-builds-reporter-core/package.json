@@ -1,7 +1,7 @@
 {
     "name": "travis-builds-reporter-core",
     "version": "0.2.0",
-    "description": "Core scripts of the travis-builds-reporter project",
+    "description": "Core module of the travis-builds-reporter project",
     "main": "src/index.js",
     "types": "src/index.d.ts",
     "directories": {
@@ -10,8 +10,6 @@
     "scripts": {
         "alldocs": "npm run doc && npm run doc2md",
         "coverage": "jest --collectCoverage=true --coverageReporters=html --coverageReporters=lcov --coverageReporters=text",
-        "doc": "jsdoc src -r --debug -d docs",
-        "doc2md": "jsdoc2md src/**/*.js > docs/api.md",
         "lint": "xo",
         "test": "xo && jest && tsd",
         "posttest": "node example/example.js"
