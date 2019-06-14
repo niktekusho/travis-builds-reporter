@@ -26,7 +26,6 @@
     },
     "license": "MIT",
     "dependencies": {
-        "axios": "^0.18.1",
         "commander": "^2.11.0",
         "prompt": "^1.0.0",
         "travis-builds-reporter-core": "file:../travis-builds-reporter-core",

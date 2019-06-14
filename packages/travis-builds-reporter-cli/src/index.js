@@ -1,13 +1,14 @@
-const axios = require('axios');
 const program = require('commander');
 const prompt = require('prompt');
 
-const {client, fetcher} = require('travis-builds-reporter-core');
+const {version} = require('../package.json');
+
+const {createClient, fetch} = require('travis-builds-reporter-core');
 const buildsUtils = require('travis-builds-reporter-utils');
 
 function setupCommander() {
 	program
-		.version('1.0.0')
+		.version(version)
 		.option('-r, --repo-name <repositoryName>', 'Specify repository name')
 		.parse(process.argv);
 }
@@ -39,7 +40,7 @@ function outputBuildsReport(builds) {
 
 const beginCommunication = repositoryName => {
 	console.log('Fetching builds...');
-	return fetcher.fetch(repositoryName, client.create(axios));
+	return fetch(createClient(), repositoryName);
 };
 
 console.log('This tool returns basic builds statistics for a Travis enabled PUBLIC-ONLY repository.');
@@ -49,8 +50,8 @@ setupCommander();
 // TODO: refactor the following block of code to use promises or at least reduce the duplicated code
 if (program.repoName) {
 	beginCommunication(program.repoName)
-		.then(builds => {
-			outputBuildsReport(builds);
+		.then(model => {
+			outputBuildsReport(model.builds);
 		})
 		.catch(console.error);
 } else {
@@ -61,8 +62,8 @@ if (program.repoName) {
 		}
 
 		return beginCommunication(result.repositoryName)
-			.then(builds => {
-				outputBuildsReport(builds);
+			.then(model => {
+				outputBuildsReport(model.builds);
 			})
 			.catch(console.error);
 	});
