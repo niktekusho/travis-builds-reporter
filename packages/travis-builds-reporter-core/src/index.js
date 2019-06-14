@@ -1,11 +1,12 @@
 const axios = require('axios');
 
-function createClient({userAgent, timeout, baseURL, host} = {
-	userAgent: 'niktekusho/travis-builds-reporter-core/1.0.0',
-	timeout: 10000,
-	baseURL: 'https://api.travis-ci.org',
-	host: 'api.travis-ci.org'
-}) {
+const pkg = require('../package.json');
+
+function createClient({
+	userAgent = `niktekusho/travis-builds-reporter-core/${pkg.version}`,
+	timeout = 10000,
+	baseURL = 'https://api.travis-ci.org',
+	host = 'api.travis-ci.org'} = {}) {
 	if (typeof userAgent !== 'string') {
 		throw new TypeError(`User Agent must be a string, but I got ${typeof userAgent}`);
 	}

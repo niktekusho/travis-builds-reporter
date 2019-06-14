@@ -1,8 +1,12 @@
 // Short for travis-builds-provider 👀
-const tbp = require('../src');
+const {createClient, fetch} = require('../src');
 
-const client = tbp.createClient({
+const client = createClient({
 	userAgent: 'niktekusho/travis-builds-reporter-core/example'
 });
 
-console.log(client);
+fetch(client, 'niktekusho/travis-builds-reporter')
+	.then(model => {
+		console.log(model);
+	})
+	.catch(console.error);

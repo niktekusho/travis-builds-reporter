@@ -13,7 +13,8 @@
         "doc": "jsdoc src -r --debug -d docs",
         "doc2md": "jsdoc2md src/**/*.js > docs/api.md",
         "lint": "xo",
-        "test": "xo && jest && tsd"
+        "test": "xo && jest && tsd",
+        "posttest": "node example/example.js"
     },
     "keywords": [
         "builds",
