@@ -2,6 +2,9 @@ const program = require('commander');
 const prompt = require('prompt');
 const {Signale} = require('signale');
 
+const {createClient, fetch} = require('travis-builds-reporter-core');
+const buildsUtils = require('travis-builds-reporter-utils');
+
 const logger = new Signale({
 	scope: ''
 });
@@ -12,9 +15,6 @@ const progressLogger = new Signale({
 });
 
 const {version} = require('../package.json');
-
-const {createClient, fetch} = require('travis-builds-reporter-core');
-const buildsUtils = require('travis-builds-reporter-utils');
 
 function setupCommander() {
 	program
