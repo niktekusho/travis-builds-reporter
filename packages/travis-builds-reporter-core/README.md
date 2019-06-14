@@ -53,7 +53,7 @@ Assuming you have an already functioning node project:
 ### createClient(options?)
 
 Creates a preconfigured axios instance that, _by default_, works with the public Travis APIs available for Open Source projects.
-The object returned by this function can and _should_ be reused upon multiple [fetch](#fetchclient-repository) invocations.
+The object returned by this function can and _should_ be reused upon multiple [`fetch`](#fetchclient-repository) invocations.
 
 #### options
 
@@ -67,7 +67,7 @@ Default: `niktekusho/travis-builds-reporter-core/{PACKAGE_VERSION}`
 Custom user agent.
 
 **The User-Agent cannot be turned off since Travis APIs require a valid and identifiable User Agent header.**
-The [createClient](#createclientoptions) function will therefore check for its presence and validity.
+The [`createClient`](#createclientoptions) function will therefore check for its presence and validity.
 
 ##### timeout
 
@@ -98,13 +98,13 @@ This function does the following:
 -  initializes basic informations needed for the asynchonous fetcher function
 -  actually makes the concurrent calls to fetch the builds
 
-Returns a `Promise<BuildsModel>` with the fetched builds.
+Returns a `Promise<`[`BuildsModel`](#buildsmodel)`>` with the fetched builds.
 
 #### client
 
 Type: `object`
 
-A configured axios instance. Use the [createClient](#createclientoptions) function to create one.
+A configured axios instance. Use the [`createClient`](#createclientoptions) function to create one.
 
 #### repository
 
@@ -142,7 +142,7 @@ Date in which the builds are fetched.
 #### static fromJSONString(json)
 
 Deserialization method with properties validation.
-Returns a [BuildsModel](#buildsmodel) object if the json represents a valid [BuildsModel](#buildsmodel) instance.
+Returns a [`BuildsModel`](#buildsmodel) object if the json represents a valid [`BuildsModel`](#buildsmodel) instance.
 Throws if the json arguments:
 
 -  cannot be parsed into a JavaScript object
@@ -152,4 +152,4 @@ Throws if the json arguments:
 
 Type: `string`
 
-Stringified JSON object of a [BuildsModel](#buildsmodel) instance.
+Stringified JSON object of a [`BuildsModel`](#buildsmodel) instance.
