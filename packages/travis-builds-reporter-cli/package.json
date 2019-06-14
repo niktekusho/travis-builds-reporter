@@ -3,15 +3,12 @@
     "version": "0.2.0",
     "description": "CLI client of the travis-builds-reporter project",
     "main": "src/index.js",
-    "directories": {
-        "test": "test"
-    },
     "bin": {
         "builds_reporter": "./bin/index.js"
     },
     "scripts": {
         "start": "node src/index.js",
-        "test": "xo"
+        "test": "xo && node src/index -r niktekusho/travis-builds-reporter"
     },
     "keywords": [
         "travis-builds-reporter"
@@ -27,6 +24,9 @@
     "license": "MIT",
     "dependencies": {
         "commander": "^2.11.0",
+        "inquirer": "^6.3.1",
+        "meow": "^5.0.0",
+        "meow-shorts": "0.0.1-0",
         "prompt": "^1.0.0",
         "signale": "^1.4.0",
         "travis-builds-reporter-core": "file:../travis-builds-reporter-core",

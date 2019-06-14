@@ -1,5 +1,4 @@
-const program = require('commander');
-const prompt = require('prompt');
+const inquirer = require('inquirer');
 const {Signale} = require('signale');
 
 const {createClient, fetch} = require('travis-builds-reporter-core');
@@ -14,71 +13,67 @@ const progressLogger = new Signale({
 	scope: 'progress'
 });
 
-const {version} = require('../package.json');
+async function main(repositoryName, options) {
+	logger.warn('This tool returns basic builds statistics for a Travis enabled PUBLIC-ONLY repository.');
+	const {verbose} = options;
 
-function setupCommander() {
-	program
-		.version(version)
-		.option('-r, --repo-name <repositoryName>', 'Specify repository name')
-		.parse(process.argv);
-}
-
-// Define prompt input schema
-const properties = [
-	{
-		name: 'repositoryName'
+	if (verbose) {
+		logger.debug(repositoryName);
+		logger.debug(options);
 	}
-];
 
-// Define prompt error function
-function onErr(err) {
-	logger.error(err.message);
-	return 1;
+	let repository = repositoryName;
+
+	if (typeof repository !== 'string' || repositoryName.trim().length === 0) {
+		if (verbose) {
+			logger.debug('Specified repository name is not a string or is empty.');
+		}
+
+		const answers = await inquirer.prompt([{
+			type: 'input ',
+			name: 'repository',
+			message: 'Repository name (ex. niktekusho/travis-builds-reporter)',
+			validate: answer => answer.trim().length === 0 ? 'Input a valid repository name' : true
+		}]);
+
+		if (verbose) {
+			logger.debug(answers);
+		}
+
+		repository = answers.repository;
+	}
+
+	progressLogger.await('Fetching builds...');
+
+	try {
+		const model = await fetch(createClient(), repository);
+		outputBuildsReport(model.builds);
+		return 0;
+	} catch (error) {
+		if (verbose) {
+			logger.error(error);
+		} else {
+			logger.error(error.message);
+		}
+
+		return 1;
+	}
 }
 
 function outputBuildsReport(builds) {
 	progressLogger.success('Builds received!');
-	const report = `
-Total builds count: ${buildsUtils.getBuildsCount(builds)}
-Successful builds count: ${buildsUtils.getSuccessfulBuildsCount(builds)}
-Canceled builds count: ${buildsUtils.getCanceledBuildsCount(builds)}
-Failed builds count: ${buildsUtils.getFailedBuildsCount(builds)}
-Errored builds count: ${buildsUtils.getErroredBuildsCount(builds)}
-Successful builds rate: ${(buildsUtils.getSuccessfulBuildsRate(builds) * 100).toFixed(2)}%
-Average builds duration: ${buildsUtils.getAverageBuildsDuration(builds, 2)} s
-Minimum builds duration: ${buildsUtils.getMinimumBuildsDuration(builds)} s
-Maximum builds duration: ${buildsUtils.getMaximumBuildsDuration(builds)} s
-`;
-	logger.success(report);
+	const report = buildsUtils.generateReport(builds);
+	logger.info(`
+Total builds count: ${report.total}
+Successful builds count: ${report.stats.successfulCount}
+Canceled builds count: ${report.stats.canceledCount}
+Failed builds count: ${report.stats.failedCount}
+Errored builds count: ${report.stats.erroredCount}
+Successful builds rate: ${report.stats.successRate}%
+Average builds duration: ${report.times.avgDuration} s
+Minimum builds duration: ${report.times.minDuration} s
+Maximum builds duration: ${report.times.maxDuration} s
+`);
 }
 
-const beginCommunication = repositoryName => {
-	progressLogger.await('Fetching builds...');
-	return fetch(createClient(), repositoryName);
-};
-
-logger.warn('This tool returns basic builds statistics for a Travis enabled PUBLIC-ONLY repository.');
-
-setupCommander();
-
-// TODO: refactor the following block of code to use promises or at least reduce the duplicated code
-if (program.repoName) {
-	beginCommunication(program.repoName)
-		.then(model => {
-			outputBuildsReport(model.builds);
-		})
-		.catch(onErr);
-} else {
-	prompt.start();
-	prompt.get(properties, (err, result) => {
-		if (err) {
-			return onErr(err);
-		}
-
-		return beginCommunication(result.repositoryName)
-			.then(model => {
-				outputBuildsReport(model.builds);
-			})
-			.catch(onErr);
-	});
-}
+module.exports = main;
