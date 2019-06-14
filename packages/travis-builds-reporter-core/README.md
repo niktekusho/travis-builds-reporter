@@ -53,7 +53,7 @@ Assuming you have an already functioning node project:
 ### createClient(options?)
 
 Creates a preconfigured axios instance that, _by default_, works with the public Travis APIs available for Open Source projects.
-The object returned by this function can and _should_ be reused upon multiple [fetch](#fetch) invocations.
+The object returned by this function can and _should_ be reused upon multiple [fetch](#fetchclient-repository) invocations.
 
 #### options
 
@@ -67,7 +67,7 @@ Default: `niktekusho/travis-builds-reporter-core/{PACKAGE_VERSION}`
 Custom user agent.
 
 **The User-Agent cannot be turned off since Travis APIs require a valid and identifiable User Agent header.**
-The [createClient](#createclient) function will therefore check for its presence and validity.
+The [createClient](#createclientoptions) function will therefore check for its presence and validity.
 
 ##### timeout
 
@@ -104,7 +104,7 @@ Returns a `Promise<BuildsModel>` with the fetched builds.
 
 Type: `object`
 
-A configured axios instance. Use the [createClient](#createclient) function to create one.
+A configured axios instance. Use the [createClient](#createclientoptions) function to create one.
 
 #### repository
 
