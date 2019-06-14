@@ -185,6 +185,68 @@ Type: `object[]`
 
 Array of build objects. Each build object must have a `state` property of type `string`.
 
+### generateReport(builds)
+
+Returns: `object`
+
+Generate a report object containing all metrics exposed by this module.
+
+#### Report
+
+##### total
+
+Type: `number`
+
+Number of examined builds.
+
+##### times.avgDuration
+
+Type: `number`
+
+Average duration (same as [getAverageBuildsDuration](getaveragebuildsdurationbuilds)).
+
+##### times.maxDuration
+
+Type: `number`
+
+Maximum duration (same as [getMaximumBuildsDuration](getmaximumbuildsdurationbuilds)).
+
+##### times.minDuration
+
+Type: `number`
+
+Minimum duration (same as [getMinimumBuildsDuration](getminimumbuildsdurationbuilds)).
+
+##### stats.successfulCount
+
+Type: `number`
+
+Successful builds count (same as [getSuccessfulBuildsCount](getsuccessfulbuildscountbuilds)).
+
+##### stats.canceledCount
+
+Type: `number`
+
+Canceled builds count (same as [getCanceledBuildsCount](getcanceledbuildscountbuilds)).
+
+##### stats.failedCount
+
+Type: `number`
+
+Failed builds count (same as [getFailedBuildsCount](getfailedbuildscountbuilds)).
+
+##### stats.erroredCount
+
+Type: `number`
+
+Errored builds count (same as [getErroredBuildsCount](geterroredbuildscountbuilds)).
+
+##### stats.successRate
+
+Type: `number`
+
+Successful builds rate, between 0 and 100.
+
 # What's next?
 
 I consider this package pretty much feature complete.  

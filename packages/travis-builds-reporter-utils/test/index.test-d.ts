@@ -21,3 +21,5 @@ expectType<number>(utils.getMaximumBuildsDuration([]));
 expectType<number>(utils.getMinimumBuildsDuration([]));
 
 expectType<object[][]>(utils.sliceBuildsByDate([]));
+
+expectType<utils.Report>(utils.generateReport([]));

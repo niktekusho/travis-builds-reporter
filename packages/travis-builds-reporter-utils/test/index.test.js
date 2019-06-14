@@ -87,4 +87,24 @@ describe('builds-utils tests', () => {
 		// There must be 3 arrays containing the builds ordered by date
 		expect(output.length).toEqual(3);
 	});
+
+	it('generate report', () => {
+		const report = utils.generateReport(builds);
+
+		expect(report).toStrictEqual({
+			total: buildsCount,
+			times: {
+				avgDuration: utils.getAverageBuildsDuration(builds),
+				maxDuration: utils.getMaximumBuildsDuration(builds),
+				minDuration: utils.getMinimumBuildsDuration(builds)
+			},
+			stats: {
+				successfulCount: passedCount,
+				canceledCount,
+				failedCount,
+				erroredCount,
+				successRate: Number(90).toFixed(2)
+			}
+		});
+	});
 });
