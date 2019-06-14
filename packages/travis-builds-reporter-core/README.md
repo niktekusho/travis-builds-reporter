@@ -16,26 +16,35 @@ Assuming you have an already functioning node project:
      ```npm i -S travis-builds-reporter-core```
 2.   In a *`*.js`* file in your project:
      1.   Require the modules contained in this package.  
-      ```javascript
-      const { createClient, fetch } = require('travis-builds-reporter-core');
-      ```
+          ```javascript
+          const { createClient, fetch } = require('travis-builds-reporter-core');
+          ```
      2.   Create the pre-configured axios instance.
-     ```javascript
-     const travis = createClient();
-     ```
-     1.   Fetch the builds from Travis using the promise returned by fetcher
-     ```javascript
-     fetch('some/repository', travis)
-      .then(model => {
-        // This is a BuildsModel instance
-        // do something with the builds
-        console.log(model.builds);
-      })
-      .catch((error) => {
-        // remember to catch any errors
-        console.error(error);
-      });
-     ```
+          ```javascript
+          const travis = createClient();
+          ```
+     3.   Fetch the builds from Travis using the promise returned by fetcher
+          ```javascript
+          fetch(travis, 'some/repository')
+               .then(model => {
+                    // This is a BuildsModel instance
+                    // do something with the builds
+                    console.log(model.builds);
+               }).catch((error) => {
+                    // remember to catch any errors
+                    console.error(error);
+               });
+          ```
+          or in an async function:
+          ```javascript
+          try {
+	          const model = await fetch(client, 'some/repo');
+              console.log(model);
+          } catch (error) {
+              // Handle error here
+              console.error(error);
+          }
+          ```
 
 # Module Details
 
@@ -44,7 +53,7 @@ Assuming you have an already functioning node project:
 ### createClient(options?)
 
 Creates a preconfigured axios instance that, _by default_, works with the public Travis APIs available for Open Source projects.
-The object returned by this function can and _should_ be reused upon [fetch](#fetch) invocations.
+The object returned by this function can and _should_ be reused upon multiple [fetch](#fetch) invocations.
 
 #### options
 
@@ -85,9 +94,9 @@ Host to fetch builds from. The default can be used to query the Travis APIs for 
 
 This function does the following:
 
-- validates Travis APIs connections and responses
-- initializes basic informations needed for the asynchonous fetcher function
-- actually makes the concurrent calls to fetch the builds
+-  validates Travis APIs connections and responses
+-  initializes basic informations needed for the asynchonous fetcher function
+-  actually makes the concurrent calls to fetch the builds
 
 Returns a `Promise<BuildsModel>` with the fetched builds.
 
@@ -136,8 +145,8 @@ Deserialization method with properties validation.
 Returns a [BuildsModel](#buildsmodel) object if the json represents a valid [BuildsModel](#buildsmodel) instance.
 Throws if the json arguments:
 
-    - cannot be parsed into a JavaScript object
-    - the parsed object does not contain the `builds` and `repository` properties
+-  cannot be parsed into a JavaScript object
+-  the parsed object does not contain the `builds` and `repository` properties
 
 ##### json
 
