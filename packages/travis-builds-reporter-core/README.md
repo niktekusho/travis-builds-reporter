@@ -6,7 +6,7 @@
 
 You can find the source code inside the `src` directory, while testing code is inside the `test` directory (pretty standard staff for nodejs pacakges).
 
-You can find an example [here](./example/example.js).
+You can find an example usage of this library [here](./example/example.js).
 
 # How do you use it?
 
