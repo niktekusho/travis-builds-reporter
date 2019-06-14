@@ -32,7 +32,7 @@ You can run this tool in 2 ways:
     2.  `cd travis-builds-reporter/`  
     3.  `npm i && npm start`
 
-#### Node.js 7 is the default target
+#### Node.js 8 is the minimum required version of Node.js.
 
 # Show me some output... :eyeglasses:
 
