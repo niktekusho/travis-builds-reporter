@@ -1,5 +1,15 @@
 const program = require('commander');
 const prompt = require('prompt');
+const {Signale} = require('signale');
+
+const logger = new Signale({
+	scope: ''
+});
+
+const progressLogger = new Signale({
+	interactive: true,
+	scope: 'progress'
+});
 
 const {version} = require('../package.json');
 
@@ -22,28 +32,32 @@ const properties = [
 
 // Define prompt error function
 function onErr(err) {
-	console.log(err);
+	logger.error(err.message);
 	return 1;
 }
 
 function outputBuildsReport(builds) {
-	console.log(`Total builds count: ${buildsUtils.getBuildsCount(builds)}`);
-	console.log(`Successful builds count: ${buildsUtils.getSuccessfulBuildsCount(builds)}`);
-	console.log(`Canceled builds count: ${buildsUtils.getCanceledBuildsCount(builds)}`);
-	console.log(`Failed builds count: ${buildsUtils.getFailedBuildsCount(builds)}`);
-	console.log(`Errored builds count: ${buildsUtils.getErroredBuildsCount(builds)}`);
-	console.log(`Successful builds rate: ${(buildsUtils.getSuccessfulBuildsRate(builds) * 100).toFixed(2)}%`);
-	console.log(`Average builds duration: ${buildsUtils.getAverageBuildsDuration(builds, 2)} s`);
-	console.log(`Minimum builds duration: ${buildsUtils.getMinimumBuildsDuration(builds)} s`);
-	console.log(`Maximum builds duration: ${buildsUtils.getMaximumBuildsDuration(builds)} s`);
+	progressLogger.success('Builds received!');
+	const report = `
+Total builds count: ${buildsUtils.getBuildsCount(builds)}
+Successful builds count: ${buildsUtils.getSuccessfulBuildsCount(builds)}
+Canceled builds count: ${buildsUtils.getCanceledBuildsCount(builds)}
+Failed builds count: ${buildsUtils.getFailedBuildsCount(builds)}
+Errored builds count: ${buildsUtils.getErroredBuildsCount(builds)}
+Successful builds rate: ${(buildsUtils.getSuccessfulBuildsRate(builds) * 100).toFixed(2)}%
+Average builds duration: ${buildsUtils.getAverageBuildsDuration(builds, 2)} s
+Minimum builds duration: ${buildsUtils.getMinimumBuildsDuration(builds)} s
+Maximum builds duration: ${buildsUtils.getMaximumBuildsDuration(builds)} s
+`;
+	logger.success(report);
 }
 
 const beginCommunication = repositoryName => {
-	console.log('Fetching builds...');
+	progressLogger.await('Fetching builds...');
 	return fetch(createClient(), repositoryName);
 };
 
-console.log('This tool returns basic builds statistics for a Travis enabled PUBLIC-ONLY repository.');
+logger.warn('This tool returns basic builds statistics for a Travis enabled PUBLIC-ONLY repository.');
 
 setupCommander();
 
@@ -53,7 +67,7 @@ if (program.repoName) {
 		.then(model => {
 			outputBuildsReport(model.builds);
 		})
-		.catch(console.error);
+		.catch(onErr);
 } else {
 	prompt.start();
 	prompt.get(properties, (err, result) => {
@@ -65,6 +79,6 @@ if (program.repoName) {
 			.then(model => {
 				outputBuildsReport(model.builds);
 			})
-			.catch(console.error);
+			.catch(onErr);
 	});
 }
