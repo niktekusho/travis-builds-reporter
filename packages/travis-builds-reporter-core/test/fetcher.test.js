@@ -37,14 +37,13 @@ describe('Fetcher Unit tests', () => {
 		beforeEach(() => {
 			// Mock any GET request to /users
 			// arguments for reply are (status, data, headers)
-			mock.onGet(`/repo/${fakeRepo}`).reply(200);
+			mock.onGet(`/repos/${fakeRepo}`).reply(200);
 			mock.onGet(`/repos/${fakeRepo}/builds`).reply(200, {
 				builds: [
 					{id: 216708735, number: '1'},
 					{id: 216708154, number: '0'}
 				]
 			});
-
 		});
 
 		afterEach(() => {
@@ -59,7 +58,7 @@ describe('Fetcher Unit tests', () => {
 
 	describe('when testing for paginated results', () => {
 		beforeEach(() => {
-			mock.onGet(`/repo/${fakeRepo}`).reply(200);
+			mock.onGet(`/repos/${fakeRepo}`).reply(200);
 
 			// Arguments for reply are (status, data, headers)
 			const longTest = {params: {after_number: null}}; // eslint-disable-line camelcase
@@ -87,7 +86,7 @@ describe('Fetcher Unit tests', () => {
 	describe('when something is not working', () => {
 		describe('and it is the network (first call)', () => {
 			beforeEach(() => {
-				mock.onGet(`/repo/${fakeRepo}`).networkError()
+				mock.onGet(`/repos/${fakeRepo}`).networkError();
 			});
 
 			afterEach(() => {
@@ -101,7 +100,7 @@ describe('Fetcher Unit tests', () => {
 
 		describe('and it is the network (NOT first call)', () => {
 			beforeEach(() => {
-				mock.onGet(`/repo/${fakeRepo}`).reply(200);
+				mock.onGet(`/repos/${fakeRepo}`).reply(200);
 
 				const longTest = {params: {after_number: null}}; // eslint-disable-line camelcase
 				const longBuilds = generateLongBuilds();
@@ -124,7 +123,7 @@ describe('Fetcher Unit tests', () => {
 
 		describe('and it is a change in Travis response', () => {
 			beforeEach(() => {
-				mock.onGet(`/repo/${fakeRepo}`).reply(200);
+				mock.onGet(`/repos/${fakeRepo}`).reply(200);
 
 				mock.onGet(`/repos/${fakeRepo}/builds`).reply(200, {
 					newBuilds: generateLongBuilds()
@@ -142,7 +141,7 @@ describe('Fetcher Unit tests', () => {
 
 		describe('and it is a non existing repository', () => {
 			beforeEach(() => {
-				mock.onGet(`/repo/${fakeRepo}`).reply(404);
+				mock.onGet(`/repos/${fakeRepo}`).reply(404);
 
 				mock.onGet(`/repos/${fakeRepo}/builds`).reply(200, {
 					builds: []

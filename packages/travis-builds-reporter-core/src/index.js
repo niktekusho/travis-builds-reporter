@@ -75,8 +75,7 @@ class Fetcher {
 	async doesRepositoryExist() {
 		// Check if the repository exists
 		try {
-			debugger;
-			await this.client.get(`/repo/${this.repository}`);
+			await this.client.get(`/repos/${this.repository}`);
 		} catch (error) {
 			if (error.response && error.response.status === 404) {
 				throw new Error(`Looks like ${this.repository} does not exist on Travis CI.`, error);
@@ -101,7 +100,7 @@ class Fetcher {
 
 	// Method that start the HTTP calls to Travis API.
 	async fetchBuildsFrom(from) {
-		return this.client.get(`/repo/${this.repository}/builds`, {
+		return this.client.get(`/repos/${this.repository}/builds`, {
 			params: {
 				after_number: from // eslint-disable-line camelcase
 			}
