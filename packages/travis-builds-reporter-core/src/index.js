@@ -48,11 +48,42 @@ class BuildsModel {
 	}
 }
 
+function isUndefined(obj) {
+	return obj === null || obj === undefined;
+}
+
 // Internal class
 class Fetcher {
-	constructor(client, repositoryName) {
+	constructor(client, repository) {
+		if (isUndefined(client)) {
+			throw new TypeError('Client cannot be \'null\' or \'undefined\'.');
+		}
+
+		if (isUndefined(repository)) {
+			throw new TypeError('Repository cannot be \'null\' or \'undefined\'.');
+		}
+
+		// Additional repository validation
+		if (typeof repository === 'string' && !repository.match(/\w+\/\w+/)) {
+			throw new TypeError(`Repository '${repository}' does not match the usual 'REPOSITORY_OWNER/REPOSITORY_NAME' pattern.`);
+		}
+
 		this.client = client;
-		this.repositoryName = repositoryName;
+		this.repository = repository;
+	}
+
+	async doesRepositoryExist() {
+		// Check if the repository exists
+		try {
+			debugger;
+			await this.client.get(`/repo/${this.repository}`);
+		} catch (error) {
+			if (error.response && error.response.status === 404) {
+				throw new Error(`Looks like ${this.repository} does not exist on Travis CI.`, error);
+			}
+
+			throw new Error(`Travis CI check responded with: ${error}`, error);
+		}
 	}
 
 	// Given the total builds count, this method create an array of builds index that can be used to spawn multiple concurrent http requests.
@@ -70,7 +101,7 @@ class Fetcher {
 
 	// Method that start the HTTP calls to Travis API.
 	async fetchBuildsFrom(from) {
-		return this.client.get(`/repos/${this.repositoryName}/builds`, {
+		return this.client.get(`/repo/${this.repository}/builds`, {
 			params: {
 				after_number: from // eslint-disable-line camelcase
 			}
@@ -123,7 +154,7 @@ In any case, feel free to open an issue on 'https://github.com/niktekusho/travis
 			 if Travis changed API in some ways, we would have caught that error
 			 in the initializeBuildsInfo (use the same fetchBuildsFrom function)
 			 */
-			const response = await this.fetchBuildsFrom(from, this.repositoryName);
+			const response = await this.fetchBuildsFrom(from, this.repository);
 			return response.data.builds;
 		};
 
@@ -137,6 +168,7 @@ In any case, feel free to open an issue on 'https://github.com/niktekusho/travis
 
 async function fetch(client, repository) {
 	const fetcher = new Fetcher(client, repository);
+	await fetcher.doesRepositoryExist();
 	const builds = await fetcher.fetchAllBuilds();
 	return new BuildsModel(repository, builds, new Date());
 }

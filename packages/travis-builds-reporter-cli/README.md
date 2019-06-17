@@ -16,7 +16,7 @@ Assuming you have an already functioning node installation:
     
 # Sample use
 ## From your favourite Terminal
-```builds_reporter -r niktekusho/travis-builds-reporter```  
+```builds_reporter niktekusho/travis-builds-reporter```  
 (use another *public* repository in place of this repository 😄)
 
 

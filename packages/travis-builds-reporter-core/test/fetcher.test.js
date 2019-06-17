@@ -17,17 +17,34 @@ const generateLongBuilds = () => {
 };
 
 describe('Fetcher Unit tests', () => {
-	const fakeRepo = 'fake';
+	const fakeRepo = 'niktekusho/fakerepo';
+
+	describe('validating Fetcher construction', () => {
+		it('should throw when client is null or undefined', () => {
+			expect(fetch(null, 'something')).rejects.toThrow('Client cannot be \'null\' or \'undefined\'.');
+		});
+
+		it('should throw when repository is null or undefined', () => {
+			expect(fetch(mock, undefined)).rejects.toThrow('Repository cannot be \'null\' or \'undefined\'.');
+		});
+
+		it('should throw when repository is not in the expected format', () => {
+			expect(fetch(mock, 'something')).rejects.toThrow('Repository \'something\' does not match the usual \'REPOSITORY_OWNER/REPOSITORY_NAME\' pattern.');
+		});
+	});
+
 	describe('when everything is right', () => {
 		beforeEach(() => {
 			// Mock any GET request to /users
 			// arguments for reply are (status, data, headers)
+			mock.onGet(`/repo/${fakeRepo}`).reply(200);
 			mock.onGet(`/repos/${fakeRepo}/builds`).reply(200, {
 				builds: [
 					{id: 216708735, number: '1'},
 					{id: 216708154, number: '0'}
 				]
 			});
+
 		});
 
 		afterEach(() => {
@@ -42,8 +59,9 @@ describe('Fetcher Unit tests', () => {
 
 	describe('when testing for paginated results', () => {
 		beforeEach(() => {
-			// Mock any GET request to /users
-			// arguments for reply are (status, data, headers)
+			mock.onGet(`/repo/${fakeRepo}`).reply(200);
+
+			// Arguments for reply are (status, data, headers)
 			const longTest = {params: {after_number: null}}; // eslint-disable-line camelcase
 			const longBuilds = generateLongBuilds();
 			mock.onGet(`/repos/${fakeRepo}/builds`, longTest).reply(200, {
@@ -69,7 +87,7 @@ describe('Fetcher Unit tests', () => {
 	describe('when something is not working', () => {
 		describe('and it is the network (first call)', () => {
 			beforeEach(() => {
-				mock.onGet(`/repos/${fakeRepo}/builds`).networkError();
+				mock.onGet(`/repo/${fakeRepo}`).networkError()
 			});
 
 			afterEach(() => {
@@ -83,6 +101,8 @@ describe('Fetcher Unit tests', () => {
 
 		describe('and it is the network (NOT first call)', () => {
 			beforeEach(() => {
+				mock.onGet(`/repo/${fakeRepo}`).reply(200);
+
 				const longTest = {params: {after_number: null}}; // eslint-disable-line camelcase
 				const longBuilds = generateLongBuilds();
 				mock.onGet(`/repos/${fakeRepo}/builds`, longTest).reply(200, {
@@ -104,6 +124,8 @@ describe('Fetcher Unit tests', () => {
 
 		describe('and it is a change in Travis response', () => {
 			beforeEach(() => {
+				mock.onGet(`/repo/${fakeRepo}`).reply(200);
+
 				mock.onGet(`/repos/${fakeRepo}/builds`).reply(200, {
 					newBuilds: generateLongBuilds()
 				});
@@ -114,8 +136,26 @@ describe('Fetcher Unit tests', () => {
 			});
 
 			it('should throw an error', () => (
-				expect(fetch(connection, fakeRepo)).rejects.toThrow()
+				expect(fetch(connection, fakeRepo)).rejects.toThrow(/Invalid response received from Travis./g)
 			));
+		});
+
+		describe('and it is a non existing repository', () => {
+			beforeEach(() => {
+				mock.onGet(`/repo/${fakeRepo}`).reply(404);
+
+				mock.onGet(`/repos/${fakeRepo}/builds`).reply(200, {
+					builds: []
+				});
+			});
+
+			afterEach(() => {
+				mock.reset();
+			});
+
+			it('should throw an error', () => {
+				expect(fetch(connection, fakeRepo)).rejects.toThrow(/Looks like .* does not exist on Travis CI./g);
+			});
 		});
 	});
 
