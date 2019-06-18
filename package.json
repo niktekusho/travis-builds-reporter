@@ -35,8 +35,7 @@
     },
     "dependencies": {
         "travis-builds-reporter-cli": "file:packages\\travis-builds-reporter-cli",
-        "travis-builds-reporter-core": "file:packages\\travis-builds-reporter-core",
-        "travis-builds-reporter-utils": "file:packages\\travis-builds-reporter-utils"
+        "travis-builds-reporter-core": "file:packages\\travis-builds-reporter-core"
     },
     "xo": {
         "ignores": [
