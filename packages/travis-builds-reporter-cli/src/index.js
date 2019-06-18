@@ -2,7 +2,6 @@ const inquirer = require('inquirer');
 const {Signale} = require('signale');
 
 const {createClient, fetch} = require('travis-builds-reporter-core');
-const buildsUtils = require('travis-builds-reporter-utils');
 
 const logger = new Signale({
 	scope: ''
@@ -47,23 +46,9 @@ async function main(repositoryName, options) {
 
 	try {
 		const model = await fetch(createClient(), repository);
-		outputBuildsReport(model.builds);
-		return 0;
-	} catch (error) {
-		if (verbose) {
-			logger.error(error);
-		} else {
-			logger.error(error.message);
-		}
-
-		return 1;
-	}
-}
-
-function outputBuildsReport(builds) {
-	progressLogger.success('Builds received!');
-	const report = buildsUtils.generateReport(builds);
-	logger.info(`
+		progressLogger.success('Builds received!');
+		const report = model.generateReport();
+		logger.info(`
 Total builds count: ${report.total}
 Successful builds count: ${report.stats.successfulCount}
 Canceled builds count: ${report.stats.canceledCount}
@@ -74,6 +59,16 @@ Average builds duration: ${report.times.avgDuration} s
 Minimum builds duration: ${report.times.minDuration} s
 Maximum builds duration: ${report.times.maxDuration} s
 `);
+		return 0;
+	} catch (error) {
+		if (verbose) {
+			logger.error(error);
+		} else {
+			logger.error(error.message);
+		}
+
+		return 1;
+	}
 }
 
 module.exports = main;

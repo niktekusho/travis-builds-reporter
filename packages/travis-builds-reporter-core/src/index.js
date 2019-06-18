@@ -26,11 +26,132 @@ function createClient({
 	});
 }
 
+function getBuildsForState(builds, state) {
+	return builds.filter(value => value.state === state);
+}
+
+function getBuildsCountForState(builds, state) {
+	return getBuildsForState(builds, state).length;
+}
+
+function extractDurations(builds) {
+	return builds.map(build => build.duration);
+}
+
+function extractDateOnly(date) {
+	return date.substring(0, 10);
+}
+
 class BuildsModel {
 	constructor(repository, builds, exportedOn) {
 		this.repository = repository;
 		this.builds = Array.isArray(builds) ? builds : [];
 		this.exportedOn = typeof exportedOn === 'string' ? new Date(exportedOn) : exportedOn;
+	}
+
+	getMinimumBuildsDuration() {
+		// { build.duration } is a number measured in seconds as of 05/07/2017
+		const durations = extractDurations(this.builds);
+		return Math.min(...durations);
+	}
+
+	getMaximumBuildsDuration() {
+		const durations = extractDurations(this.builds);
+		return Math.max(...durations);
+	}
+
+	getAverageBuildsDuration(decimals) {
+		const durations = extractDurations(this.builds);
+		if (durations.length > 0) {
+			const totalDuration = durations.reduce((sum, newDuration) => sum + newDuration);
+			const average = totalDuration / durations.length;
+			if (decimals && typeof decimals === 'number') {
+				return Number(average.toFixed(decimals));
+			}
+
+			return average;
+		}
+
+		return NaN;
+	}
+
+	sliceBuildsByDate() {
+		// Key will be date only (YYYY-MM-DD), value will be array of builds with that started_at date
+		const dateKeysMap = new Map();
+
+		this.builds.forEach(build => {
+			const buildDateTime = extractDateOnly(build.started_at || build.finished_at);
+			// If the key is present, its return value will be != null and we can skip insertion in map
+			const existingValue = dateKeysMap.get(buildDateTime);
+			if (existingValue === null || existingValue === undefined) {
+				dateKeysMap.set(buildDateTime, this.builds.filter(entry => {
+					// Pick one that hopefully isn't null
+					const entryDate = entry.started_at || entry.finished_at;
+					const buildDate = build.started_at || build.finished_at;
+					return extractDateOnly(entryDate) === extractDateOnly(buildDate);
+				}));
+			}
+		});
+
+		return [...dateKeysMap.values()];
+	}
+
+	getBuildsCount() {
+		return this.builds.length;
+	}
+
+	getSuccessfulBuilds() {
+		return getBuildsForState(this.builds, 'passed');
+	}
+
+	getSuccessfulBuildsCount() {
+		return getBuildsCountForState(this.builds, 'passed');
+	}
+
+	getCanceledBuilds() {
+		return getBuildsForState(this.builds, 'canceled');
+	}
+
+	getCanceledBuildsCount() {
+		return getBuildsCountForState(this.builds, 'canceled');
+	}
+
+	getErroredBuilds() {
+		return getBuildsForState(this.builds, 'errored');
+	}
+
+	getErroredBuildsCount() {
+		return getBuildsCountForState(this.builds, 'errored');
+	}
+
+	getFailedBuilds() {
+		return getBuildsForState(this.builds, 'failed');
+	}
+
+	getFailedBuildsCount() {
+		return getBuildsCountForState(this.builds, 'failed');
+	}
+
+	getSuccessfulBuildsRate() {
+		return getBuildsCountForState(this.builds, 'passed') / this.builds.length;
+	}
+
+	generateReport() {
+		return {
+			total: this.getBuildsCount(),
+			times: {
+				avgDuration: this.getAverageBuildsDuration(2),
+				maxDuration: this.getMaximumBuildsDuration(),
+				minDuration: this.getMinimumBuildsDuration()
+			},
+			stats: {
+				successfulCount: this.getSuccessfulBuildsCount(),
+				canceledCount: this.getCanceledBuildsCount(),
+				failedCount: this.getFailedBuildsCount(),
+				erroredCount: this.getErroredBuildsCount(),
+				successRate: (this.getSuccessfulBuildsRate() * 100).toFixed(2)
+			}
+		};
 	}
 
 	static fromJSONString(json) {

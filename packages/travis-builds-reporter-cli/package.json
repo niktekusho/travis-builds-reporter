@@ -29,8 +29,7 @@
         "meow-shorts": "0.0.1-0",
         "prompt": "^1.0.0",
         "signale": "^1.4.0",
-        "travis-builds-reporter-core": "file:../travis-builds-reporter-core",
-        "travis-builds-reporter-utils": "file:../travis-builds-reporter-utils"
+        "travis-builds-reporter-core": "file:../travis-builds-reporter-core"
     },
     "xo": false
 }
