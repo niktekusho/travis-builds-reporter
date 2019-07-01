@@ -17,8 +17,8 @@ async function main(repositoryName, options) {
 	const {verbose} = options;
 
 	if (verbose) {
-		logger.debug(repositoryName);
-		logger.debug(options);
+		logger.debug(`Input repository: ${repositoryName}`);
+		logger.debug(`Flag options: ${options}`);
 	}
 
 	let repository = repositoryName;

@@ -39,7 +39,6 @@ Maximum builds duration: 197 s
 
 # What's next?
 To do:
--   Show meaningful errors and not the complete node stack (only with a "--debug" flag we should show it)
+-   ~~Show meaningful errors and not the complete node stack (only with a "--debug" flag we should show it)~~
 -   Improve this document...
 -   *What else?* (cit.)
-
