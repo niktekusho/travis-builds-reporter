@@ -1,17 +1,71 @@
 const axios = require('axios');
-const client = require('../src/client');
+
+const {createClient} = require('../src');
+const {version} = require('../package.json');
+
+const userAgent = `niktekusho/travis-builds-reporter-core/${version}`;
 
 jest.mock('axios');
 
 describe('Axios client Test Suite', () => {
 	it('should call axios.create with the default params', () => {
-		client.create(axios);
+		createClient();
 
 		expect(axios.create).toBeCalledWith({
 			baseURL: 'https://api.travis-ci.org',
 			timeout: 10000,
 			headers: {
-				'User-Agent': 'niktekusho/travis-builds-reporter-core/1.0.0',
+				'User-Agent': userAgent,
+				Accept: 'application/vnd.travis-ci.2+json',
+				Host: 'api.travis-ci.org'
+			}
+		});
+	});
+
+	it('should call axios.create with the default params where the property is undefined', () => {
+		createClient({baseURL: 'a'});
+
+		expect(axios.create).toBeCalledWith({
+			baseURL: 'a',
+			timeout: 10000,
+			headers: {
+				'User-Agent': userAgent,
+				Accept: 'application/vnd.travis-ci.2+json',
+				Host: 'api.travis-ci.org'
+			}
+		});
+
+		createClient({host: 'a'});
+
+		expect(axios.create).toBeCalledWith({
+			baseURL: 'https://api.travis-ci.org',
+			timeout: 10000,
+			headers: {
+				'User-Agent': userAgent,
+				Accept: 'application/vnd.travis-ci.2+json',
+				Host: 'a'
+			}
+		});
+
+		createClient({timeout: 1});
+
+		expect(axios.create).toBeCalledWith({
+			baseURL: 'https://api.travis-ci.org',
+			timeout: 1,
+			headers: {
+				'User-Agent': userAgent,
+				Accept: 'application/vnd.travis-ci.2+json',
+				Host: 'api.travis-ci.org'
+			}
+		});
+
+		createClient({userAgent: 'a'});
+
+		expect(axios.create).toBeCalledWith({
+			baseURL: 'https://api.travis-ci.org',
+			timeout: 10000,
+			headers: {
+				'User-Agent': 'a',
 				Accept: 'application/vnd.travis-ci.2+json',
 				Host: 'api.travis-ci.org'
 			}
@@ -19,16 +73,26 @@ describe('Axios client Test Suite', () => {
 	});
 
 	it('should call axios.create with the right params', () => {
-		client.create(axios, 'test');
+		createClient({
+			baseURL: 'foo',
+			host: 'bar',
+			userAgent: 'baz',
+			timeout: 123
+		});
 
 		expect(axios.create).toBeCalledWith({
-			baseURL: 'https://api.travis-ci.org',
-			timeout: 10000,
+			baseURL: 'foo',
+			timeout: 123,
 			headers: {
-				'User-Agent': 'test',
+				'User-Agent': 'baz',
 				Accept: 'application/vnd.travis-ci.2+json',
-				Host: 'api.travis-ci.org'
+				Host: 'bar'
 			}
 		});
+	});
+
+	it('should validate its input arguments', () => {
+		expect(() => createClient({userAgent: ' '})).toThrowError('Travis APIs require a not empty User Agent');
+		expect(() => createClient({userAgent: 5})).toThrowError('User Agent must be a string, but I got number');
 	});
 });

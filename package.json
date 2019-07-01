@@ -6,8 +6,6 @@
     "scripts": {
         "clean": "lerna clean --yes",
         "coverage": "lerna run coverage",
-        "doc": "lerna run doc",
-        "doc-md": "lerna run doc2md",
         "lerna": "lerna",
         "lint": "lerna run lint",
         "package": "lerna exec -- npm pack",
@@ -31,16 +29,13 @@
         "@types/jest": "^24.0.13",
         "axios-mock-adapter": "^1.9.0",
         "jest": "^24.8.0",
-        "jsdoc": "^3.5.3",
-        "jsdoc-to-markdown": "^5.0.0",
         "lerna": "^3.14.1",
         "tsd": "^0.7.3",
         "xo": "^0.24.0"
     },
     "dependencies": {
         "travis-builds-reporter-cli": "file:packages\\travis-builds-reporter-cli",
-        "travis-builds-reporter-core": "file:packages\\travis-builds-reporter-core",
-        "travis-builds-reporter-utils": "file:packages\\travis-builds-reporter-utils"
+        "travis-builds-reporter-core": "file:packages\\travis-builds-reporter-core"
     },
     "xo": {
         "ignores": [

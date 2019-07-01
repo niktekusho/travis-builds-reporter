@@ -16,7 +16,7 @@ Assuming you have an already functioning node installation:
     
 # Sample use
 ## From your favourite Terminal
-```builds_reporter -r niktekusho/travis-builds-reporter```  
+```builds_reporter niktekusho/travis-builds-reporter```  
 (use another *public* repository in place of this repository 😄)
 
 
@@ -39,7 +39,6 @@ Maximum builds duration: 197 s
 
 # What's next?
 To do:
--   Show meaningful errors and not the complete node stack (only with a "--debug" flag we should show it)
+-   ~~Show meaningful errors and not the complete node stack (only with a "--debug" flag we should show it)~~
 -   Improve this document...
 -   *What else?* (cit.)
-

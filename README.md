@@ -1,5 +1,5 @@
 # Status
-[![Build Status](https://travis-ci.org/niktekusho/travis-builds-reporter.svg?branch=master)](https://travis-ci.org/niktekusho/travis-builds-reporter)
+[![Build Status](https://travis-ci.com/niktekusho/travis-builds-reporter.svg?branch=master)](https://travis-ci.com/niktekusho/travis-builds-reporter)
 [![codecov](https://codecov.io/gh/niktekusho/travis-builds-reporter/branch/master/graph/badge.svg)](https://codecov.io/gh/niktekusho/travis-builds-reporter)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 
@@ -19,7 +19,6 @@ So... I imagine you have questions...
 -   **What's in there?**  
     This is the list of the single packages which makes this (useful hopefully... :wink:) tool:
     -   [`travis-builds-reporter-core`](packages/travis-builds-reporter-core) is the core package of the utility: its goal is to let users configure an axios instance and use it to retrieve builds from Travis CI.
-    -   [`travis-builds-reporter-utils`](packages/travis-builds-reporter-utils) is a utility package that offers basic statistics over a builds list (like # of successful builds, etc.). <br/>***Note: this package could potentially work with other providers if they provide a similar interface.***
     -   [`travis-builds-reporter-cli`](packages/travis-builds-reporter-cli) is a **C**ommand **L**ine **I**nterface that allows users to have basic stats of a public Travis CI repository.
 
 # What do you need? :wrench:
@@ -32,7 +31,7 @@ You can run this tool in 2 ways:
     2.  `cd travis-builds-reporter/`  
     3.  `npm i && npm start`
 
-#### Node.js 7 is the default target
+#### Node.js 8 is the minimum required version of Node.js.
 
 # Show me some output... :eyeglasses:
 
@@ -67,12 +66,6 @@ Thanks to:
 
 # What's next? :rocket:
 To do:
--   CLI misses README
--   CLI should be installable using ```npm i -g travis-builds-reporter-cli``` and should be available using ```travis-cli -r ... ```
--   Improve script fault-tolerance (including better error-logging)
--   ~~Improve this document...~~  
-***update 26/07/2017***: I'm feeling pretty good about this now, if you think there's something missing or that can be improved, please open an [issue](https://github.com/niktekusho/travis-builds-reporter/issues/new)
--   ~~Add some tests...~~ (some are actually here)
 -   Give more options like:
     -   ~~passing arguments to the scripts~~ (done)
     -   possibility to save the output to a JSON file

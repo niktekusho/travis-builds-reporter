@@ -1,69 +1,74 @@
-const axios = require('axios');
-const program = require('commander');
-const prompt = require('prompt');
+const inquirer = require('inquirer');
+const {Signale} = require('signale');
 
-const {client, fetcher} = require('travis-builds-reporter-core');
-const buildsUtils = require('travis-builds-reporter-utils');
+const {createClient, fetch} = require('travis-builds-reporter-core');
 
-function setupCommander() {
-	program
-		.version('1.0.0')
-		.option('-r, --repo-name <repositoryName>', 'Specify repository name')
-		.parse(process.argv);
-}
+const logger = new Signale({
+	scope: ''
+});
 
-// Define prompt input schema
-const properties = [
-	{
-		name: 'repositoryName'
+const progressLogger = new Signale({
+	interactive: true,
+	scope: 'progress'
+});
+
+async function main(repositoryName, options) {
+	logger.warn('This tool returns basic builds statistics for a Travis enabled PUBLIC-ONLY repository.');
+	const {verbose} = options;
+
+	if (verbose) {
+		logger.debug(`Input repository: ${repositoryName}`);
+		logger.debug(`Flag options: ${options}`);
 	}
-];
 
-// Define prompt error function
-function onErr(err) {
-	console.log(err);
-	return 1;
-}
+	let repository = repositoryName;
 
-function outputBuildsReport(builds) {
-	console.log(`Total builds count: ${buildsUtils.getBuildsCount(builds)}`);
-	console.log(`Successful builds count: ${buildsUtils.getSuccessfulBuildsCount(builds)}`);
-	console.log(`Canceled builds count: ${buildsUtils.getCanceledBuildsCount(builds)}`);
-	console.log(`Failed builds count: ${buildsUtils.getFailedBuildsCount(builds)}`);
-	console.log(`Errored builds count: ${buildsUtils.getErroredBuildsCount(builds)}`);
-	console.log(`Successful builds rate: ${(buildsUtils.getSuccessfulBuildsRate(builds) * 100).toFixed(2)}%`);
-	console.log(`Average builds duration: ${buildsUtils.getAverageBuildsDuration(builds, 2)} s`);
-	console.log(`Minimum builds duration: ${buildsUtils.getMinimumBuildsDuration(builds)} s`);
-	console.log(`Maximum builds duration: ${buildsUtils.getMaximumBuildsDuration(builds)} s`);
-}
-
-const beginCommunication = repositoryName => {
-	console.log('Fetching builds...');
-	return fetcher.fetch(repositoryName, client.create(axios));
-};
-
-console.log('This tool returns basic builds statistics for a Travis enabled PUBLIC-ONLY repository.');
-
-setupCommander();
-
-// TODO: refactor the following block of code to use promises or at least reduce the duplicated code
-if (program.repoName) {
-	beginCommunication(program.repoName)
-		.then(builds => {
-			outputBuildsReport(builds);
-		})
-		.catch(console.error);
-} else {
-	prompt.start();
-	prompt.get(properties, (err, result) => {
-		if (err) {
-			return onErr(err);
+	if (typeof repository !== 'string' || repositoryName.trim().length === 0) {
+		if (verbose) {
+			logger.debug('Specified repository name is not a string or is empty.');
 		}
 
-		return beginCommunication(result.repositoryName)
-			.then(builds => {
-				outputBuildsReport(builds);
-			})
-			.catch(console.error);
-	});
+		const answers = await inquirer.prompt([{
+			type: 'input ',
+			name: 'repository',
+			message: 'Repository name (ex. niktekusho/travis-builds-reporter)',
+			validate: answer => answer.trim().length === 0 ? 'Input a valid repository name' : true
+		}]);
+
+		if (verbose) {
+			logger.debug(answers);
+		}
+
+		repository = answers.repository;
+	}
+
+	progressLogger.await('Fetching builds...');
+
+	try {
+		const model = await fetch(createClient(), repository);
+		progressLogger.success('Builds received!');
+		const report = model.generateReport();
+		logger.info(`
+Total builds count: ${report.total}
+Successful builds count: ${report.stats.successfulCount}
+Canceled builds count: ${report.stats.canceledCount}
+Failed builds count: ${report.stats.failedCount}
+Errored builds count: ${report.stats.erroredCount}
+Successful builds rate: ${report.stats.successRate}%
+Average builds duration: ${report.times.avgDuration} s
+Minimum builds duration: ${report.times.minDuration} s
+Maximum builds duration: ${report.times.maxDuration} s
+`);
+		return 0;
+	} catch (error) {
+		if (verbose) {
+			logger.error(error);
+		} else {
+			logger.error(error.message);
+		}
+
+		return 1;
+	}
 }
+
+module.exports = main;

@@ -64,3 +64,6 @@ test/
 
 # Don't publish docs
 docs/
+
+# Don't publish examples
+example/
