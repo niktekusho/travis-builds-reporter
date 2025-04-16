@@ -1,3 +1,6 @@
+
+**Update: This project hasn’t been maintained in a long time... Time to archive it while keeping it public for reference. 😉**
+
 # Status
 [![Build Status](https://travis-ci.com/niktekusho/travis-builds-reporter.svg?branch=master)](https://travis-ci.com/niktekusho/travis-builds-reporter)
 [![codecov](https://codecov.io/gh/niktekusho/travis-builds-reporter/branch/master/graph/badge.svg)](https://codecov.io/gh/niktekusho/travis-builds-reporter)
